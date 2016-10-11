@@ -1,0 +1,19 @@
+#!/bin/bash
+
+fork(){
+	`sudo python ~/gitrepos/paperearth.net/django-tutorial/mysite/manage.py runserver 0.0.0.0:80`
+        child_pid=$!
+        parent_pid=$PPID
+        echo $PPID > ~/gitrepos/paperearth.net/django-tutorial.pid
+}
+
+if [ ! -f ~/gitrepos/paperearth.net/django-tutorial.pid ]; then
+	fork
+else
+	PID=`cat ~/gitrepos/paperearth.net/django-tutorial.pid`
+	if [ ! `kill -s -0 $PID` ]; then
+		fork
+	fi
+fi
+
+exit
