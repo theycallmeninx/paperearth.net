@@ -1,0 +1,1 @@
+$("#myDiv").addClass("highlight");

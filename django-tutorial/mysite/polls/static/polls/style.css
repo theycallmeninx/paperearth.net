@@ -1,7 +1,26 @@
-li a {
-    color: green;
+body {
+    background: white;
 }
 
-body {
-    background: white url("images/background.gif") no-repeat right bottom;
+.highlight {
+	background: yellow;
+}
+
+.polls {
+	background: #369;
+	color: white;
+  width: 250px;
+}
+
+.polls h2 {
+  padding: 10px;
+  padding-top: 3px;
+}
+
+.polls a {
+  color: white;
+}
+
+.polls li {
+  padding-bottom: 10px;
 }
