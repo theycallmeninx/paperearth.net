@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DATE=$(date +%Y%m%d)
+
+fork(){
+	sudo python ~/gitrepos/paperearth.net/django-tutorial/mysite/manage.py runserver 0.0.0.0:80 &>~/logs/$DATE.log &
+        child_pid=$!
+        echo $child_pid > ~/gitrepos/paperearth.net/django-tutorial.pid
+}
+
+if [ ! -f ~/gitrepos/paperearth.net/django-tutorial.pid ]; then
+	fork
+else
+	PID=`cat ~/gitrepos/paperearth.net/django-tutorial.pid`
+	if [[ ! `ps -p "$PID" --no-headers` ]]; then
+		fork
+	fi
+fi
+
+exit
