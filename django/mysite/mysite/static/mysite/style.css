@@ -2,7 +2,71 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: Arial,Helvetica,sans-serif;
 }
-#map {
-  height: 100%;
+
+
+.Content {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+	width: 75%;
+	height: 100%;
+	border: solid green;
+	border-right-width: .2em;
+	border-left-width: .2em;
+	border-top-width: 0em;
+	border-bottom-width: 0em;
+	background: gold;	
+}
+
+.MainBanner {
+	height: 6.5em; /* 100px*/
+	background: forestgreen;
+	vertical-align: middle;
+	display: flex;
+	align-items: center
+}
+
+.MainBanner p {
+	color: white;
+	margin: 0em 0em 0em 1em;
+	font-size: 3.5em;
+	font-weight: bold;
+}
+
+.ProjectBanner {
+
+}
+
+.Projects {
+	padding: 1em;
+	width: 9em;
+	height: 9em;
+	border: solid gold;
+	border-width: 0.2em;
+    margin-top: 2em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: white;
+}
+
+.Projects img {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Projects p {
+	margin-top: 0.25em;
+	text-align: center;
+}
+
+a:link {
+    color: black;
+}
+
+a:visited {
+    color: black;
 }

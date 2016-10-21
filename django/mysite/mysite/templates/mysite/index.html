@@ -2,15 +2,26 @@
 <html>
   <head>
     <title>Paper Earth!</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
   </head>
   <body>
-    <div style="height:50px;">
-    </div>
-    <div id="map" style="height:100%;">
+    <div class="Content">
+      <div class="MainBanner">
+        <p>Paper Earth! Projects</p>
+      </div>
+      <div class="ProjectBanner">
+        <div class="Projects">
+          <a href="./polls/"> 
+            <img src="{% static 'images/polls.png' %}" alt="Polls">
+            <p>Polls</p>
+          </a>
+        </div>
+      </div>
+      <div id="map"">
+      </div>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPEppO0U-4BDO3BBXlXtA9h8Uk0kJL6_s&callback=initMap" async defer></script>
     <script src="{% static 'mysite/scripts.js' %}"></script>
