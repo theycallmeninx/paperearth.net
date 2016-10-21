@@ -1,7 +1,8 @@
-li a {
-    color: green;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-
-body {
-    background: white url("images/background.gif") no-repeat right bottom;
+#map {
+  height: 100%;
 }
