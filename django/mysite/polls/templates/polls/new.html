@@ -1,17 +1,9 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    {% load static %} 
-    <meta charset="utf-8">
-    <meta name="description" content="Django Web App for creating and voting on polls">
-    <title>Django Polls Web App</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
-  </head>
-  <body>
+{% extends 'base.html' %}
+
+{% block content %}
     <form action="" method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="button" value="Add Choice" />
         <input type="submit" value="Submit Question" />
     </form>
-  </body>
-</html>
+{% endblock content %}

@@ -1,42 +1,16 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    {% load static %} 
-    <meta charset="utf-8">
-    <meta name="description" content="Django Web App for creating and voting on polls">
-    <title>Django Polls Web App</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
-  </head>
-  <body>
-    <header role="banner">
-      <h1>Polls</h1>
-      <nav role="navigation">
-        <p>site navigation</p>
-      </nav>
-    </header>
-    <main role="main">
-      <article>
-        <section>
-          <div id="allPolls">
-            <div class="polls" id="latestPolls">
-              <h2>Latest Polls</h2>
-              {% if latest_question_list %}
-                  <ol>
-                  {% for question in latest_question_list %}
-                  <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-                  {% endfor %}
-                  </ol>
-              {% else %}
-                  <p>No polls are available.</p>
-              {% endif %}
-            </div>
-          </div>
-       </section>
-      </article>
-    </main>
-    <footer role="contentinfo">
-    </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="{% static 'polls/script.js' %}"></script>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="polls" id="latestPolls">
+  <h2>Most Recent Polls</h2>
+  {% if latest_question_list %}
+      <ol>
+      {% for question in latest_question_list %}
+      <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+      {% endfor %}
+      </ol>
+  {% else %}
+      <p>No polls are available.</p>
+  {% endif %}
+</div>
+{% endblock content %}
