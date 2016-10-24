@@ -25,7 +25,8 @@ SECRET_KEY = '@j@sack4^1^1kb+jy@*xcxgu9v2=_%%xmwcgz*#0n(7urr8lym'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1',
+ALLOWED_HOSTS = ['localhost',
+                 '127.0.0.1',
                  '0.0.0.0',
                  'paperearth.net' 
                 ]
@@ -124,5 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( 
+                    os.path.join(BASE_DIR, 'mysite', 'static'),
                     os.path.join(BASE_DIR, 'polls', 'static'),
+                    os.path.join(BASE_DIR, 'maps', 'static'),
                     )
