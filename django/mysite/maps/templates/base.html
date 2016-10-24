@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+    <head>
+        <meta char="UTF-8">
+        <title>Paper Earth! Maps</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
+        <meta description="Simple Django Maps Project">
+    </head>
+    <body>
+        <div class="Content">
+            <div class="MainBanner">
+                <p>Paper Earth! Projects</p>
+            </div>
+            <div id="map">
+                {% block content %}
+                {% endblock content%}
+            </div>
+        </div>        
+    </body>
+</html>

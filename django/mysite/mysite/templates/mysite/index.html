@@ -1,8 +1,8 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>Paper Earth!</title>
-    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
   <body>
     <div class="Content">
       <div class="MainBanner">
-        <p>Paper Earth! Projects</p>
+        <a href="/"><img src="{% static 'images/homeicon.png' %}"></a><p>Paper Earth! Projects</p>
       </div>
       <div class="ProjectBanner">
         <div class="Projects">
@@ -20,10 +20,7 @@
           </a>
         </div>
       </div>
-      <div id="map"">
-      </div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPEppO0U-4BDO3BBXlXtA9h8Uk0kJL6_s&callback=initMap" async defer></script>
     <script src="{% static 'mysite/scripts.js' %}"></script>
   </body>
 </html>
