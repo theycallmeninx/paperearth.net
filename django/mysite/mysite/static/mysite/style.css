@@ -5,6 +5,17 @@ html, body {
   font-family: Arial,Helvetica,sans-serif;
 }
 
+div {
+  display: block;
+}
+
+a {
+  font-weight: 700;
+}
+
+.h1 .h2 .h3 .h4 .h5 .h6 {
+    text-transform: uppercase;
+}
 
 .Content {
 	display: block;
@@ -20,6 +31,11 @@ html, body {
 	background: gold;	
 }
 
+.BlockContent {
+  display: block;
+  height: 90%;
+}
+
 .MainBanner {
 	height: 6.5em; /* 100px*/
 	background: forestgreen;
@@ -33,10 +49,6 @@ html, body {
 	margin: 0em 0em 0em 1em;
 	font-size: 3.5em;
 	font-weight: bold;
-}
-
-.ProjectBanner {
-
 }
 
 .Projects {
@@ -69,4 +81,33 @@ a:link {
 
 a:visited {
     color: black;
+}
+
+.footer-container {
+  margin-right: auto;
+  margin-left: auto;
+  border-top: solid gray;
+  text-align: right;
+}
+
+.footer-social-media {
+  padding: 0;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.footer-social-media h5{
+  margin-bottom: 0;
+}
+
+.footer-social-media ul {
+  list-style: none;
+  display: inline-block;
+  margin-left: 0;
+}
+
+.footer-social-media li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 0;
 }
