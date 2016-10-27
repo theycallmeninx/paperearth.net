@@ -10,10 +10,21 @@ function initMap() {
   });
 }
 
-var mailform = document.getElementById("mailformcontainer");
+
+var mailform = document.getElementById("mailform");
+
+var mailformcontainer = document.getElementById("mailcontainer");
 
 mailform.onclick = function () {
-  if (mailform.style.display == "block") {
-    mailform.style.display = "none";
+  var e = window.event;
+  e.cancelBubble = true;
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+};
+
+mailformcontainer.onclick = function () {
+  if (this.style.display === "block") {
+    this.style.display = "none";
   }
 };

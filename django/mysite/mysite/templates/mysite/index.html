@@ -12,16 +12,22 @@
       <div class="MainBanner">
         <div id="mainbannerleft">
           <a href="/"><img style="float:left;" size="75%" src="{% static 'images/homeicon2.png' %}"></a>
-          <p>Paper Earth! Projects</p>
+          <h1>Paper Earth! Projects</h1>
         </div>
         <div id="mainbannerright">
           <ul id="mainnavlinks">
-            <li><a href="/#about" alt="About Me">about</a></li>
-            <li><a href="/#Projects" alt="Projects">projects</a></li>
+            <li><a href="/" alt="Home">home</a></li>
+            <li><a href="/#About" alt="About Me">about</a></li>
+            <li style="border-width:0;"><a href="/#Projects" alt="Projects">projects</a></li>
           </ul>
         </div>
       </div>
       <main role="main">
+        <section>
+          <div id="HomeSplash">
+            <p style="text-align:center;"> Splash Homepage Graphic Here </p>
+          </div>
+        </section>
         <section>
           <div class="AboutBanner">
             <div class="About" id="About">
@@ -33,30 +39,38 @@
                 <ul>
                   <li><a href="http://linkedin.com/in/alexjboyle" target="_blank"><img src="{% static 'images/linkedinicon.png' %}"></a></li>
                   <li><a href="https://github/Ninx103" target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
-                  <li><a href="#mailformcontainer" onClick="$('#mailformcontainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
+                  <li><a href="#" onClick="$('#mailcontainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
                 </ul>
               </div>
             </div>
-            <div id="mailformcontainer" class="mailformcontainer" >
-              <div class="mailform" id="mailform">
-                <form>
-                  <label class="mailformlabel">email:</label><input type="email" id="mailform_email"><br>
-                  <label class="mailformlabel">subject:</label><input type="text" id="mailform_subject"><br>
-                  <textarea id="mailtextarea" ></textarea><br>
-                  <input type="submit" value="send">
-                </form>
+            <div id="mailcontainer" class="mailcontainer" >
+              <div class="mailbox" id="mailbox">
+                <div id="mailclose">
+                  <a href="#" onClick="$('#mailcontainer').hide();"><div style="float:right;"><p>X</p></div></a>
+                </div>
+                <div id="mailform">
+                  <form>
+                    <label>email:</label><input type="email" id="mailform_email"><br>
+                    <label>subject:</label><input type="text" id="mailform_subject"><br>
+                    <textarea id="mailform_textarea" ></textarea><br>
+                    <input id="mailform_submit" type="submit" value="send">
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </section>
         <section>
           <div class="ProjectBanner">
-            <h2>Projects</h2>
-            <div class="Projects" id="Projects">          
-              <a href="./polls/"> 
-                <img src="{% static 'images/polls.png' %}" alt="Polls">
-                <p>Polls</p>
-              </a>
+            <div id="Projects">
+              <h2>Projects</h2>
+              <ul>
+                <li>
+                  <a href="./polls/"><div id="PollsProject" class="ProjectsClass">
+                  <img src="{% static 'images/polls.png' %}" alt="Polls"><p>Polls</p>
+                  </div></a>                    
+                </li>
+              </ul>
             </div>
           </div>
         </section>
