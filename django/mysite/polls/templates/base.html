@@ -8,27 +8,27 @@
     <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
   </head>
   <body>
-    <div class="Content">    
+    <div class="ProjectContent">    
       <div class="MainBanner">
-        <a href="/"><img src="{% static 'images/homeicon.png' %}"></a><p>Paper Earth! Projects</p>
+        <div id="mainbannerleft">
+          <a href="/"><img style="float:left;" size="75%" src="{% static 'images/homeicon2.png' %}"></a>
+          <p>Paper Earth! Projects</p>
+        </div>
+        <div id="mainbannerright">
+          <ul id="mainnavlinks">
+            <li><a href="/#about" alt="About Me">about</a></li>
+            <li><a href="/#Projects" alt="Projects">projects</a></li>
+          </ul>
+        </div>
       </div>
       <main role="main">
         <div class="BlockContent">
+          <h2><a href="{% url 'polls:index' %}"> Polls</a></h2>
           {% block content %}
           {% endblock content %}
         </div>
       </main>
       <footer role="contentinfo">
-        <div class="footer-container">
-          <div class="footer-social-media">
-            <h5>Connect</h5>
-            <ul>
-              <li><a href="http://linkedin.com/in/alexjboyle" target="_blank"><img src="{% static 'images/linkedinicon.png' %}"></a></li>
-              <li><a href="https://github/Ninx103"target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
-              <li><a href="mailto:alex@paperearth.net"><img src="{% static 'images/mailicon.png' %}"></a></li>
-            </ul>
-          </div>
-        </div>
       </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

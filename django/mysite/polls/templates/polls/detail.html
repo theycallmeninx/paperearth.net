@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{ question.question_text }}</h1>
+<div id="PollsContent">
+  <div id="PollsDetails">
+    <h3>{{ question.question_text }}</h3>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
+    <form action="{% url 'polls:vote' question.id %}" method="post">
 
-{% csrf_token %}
-{% for choice in question.choice_set.all %}
- 	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-{% endfor %}
-    <input type="radio" name="choice" id="newchoice" value="new"/>
-    <input type="text" name="newchoicetext" id="newchoicetext" value="New Choice..." /> <br>
-    <input type="submit" value="Vote" />
-    <a href="{% url 'polls:results' question.id %}">View Results</a>
-</form>
+    {% csrf_token %}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+        <input type="radio" name="choice" id="newchoice" value="new"/>
+        <input type="text" name="newchoicetext" id="newchoicetext" value="New Choice..." /> <br>
+        <br>  
+        <input type="submit" value="Vote" style="width:75px;" />
+      <a style="font-size:medium;" href="{% url 'polls:results' question.id %}">View Results</a>
+    </form>
+  </div>
+</div>
 {% endblock content %}
