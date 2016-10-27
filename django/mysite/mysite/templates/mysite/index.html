@@ -10,32 +10,62 @@
   <body>
     <div class="Content">    
       <div class="MainBanner">
-        <a href="/"><img src="{% static 'images/homeicon.png' %}"></a><p>Paper Earth! Projects</p>
+        <div id="mainbannerleft">
+          <a href="/"><img style="float:left;" size="75%" src="{% static 'images/homeicon2.png' %}"></a>
+          <p>Paper Earth! Projects</p>
+        </div>
+        <div id="mainbannerright">
+          <ul id="mainnavlinks">
+            <li><a href="#about" alt="About Me">about</a></li>
+            <li><a href="#Projects" alt="Projects">projects</a></li>
+          </ul>
+        </div>
       </div>
       <main role="main">
-      <div class="ProjectBanner">
-        <div class="Projects">
-          <a href="./polls/"> 
-            <img src="{% static 'images/polls.png' %}" alt="Polls">
-            <p>Polls</p>
-          </a>
-        </div>
-      </div>
+        <section>
+          <div class="AboutBanner">
+            <div class="About" id="About">
+              <h2>About</h2>
+                      
+            </div>
+            <div class="Connect">
+              <div class="connect-social-media">
+                <h3>Connect</h3>
+                <ul>
+                  <li><a href="http://linkedin.com/in/alexjboyle" target="_blank"><img src="{% static 'images/linkedinicon.png' %}"></a></li>
+                  <li><a href="https://github/Ninx103" target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
+                  <li><a href="#mailformcontainer" onClick="$('#mailformcontainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
+                </ul>
+              </div>
+            </div>
+            <div id="mailformcontainer" class="mailformcontainer" >
+              <div class="mailform" id="mailform">
+                <form>
+                  <label class="mailformlabel">email:</label><input type="email" id="mailform_email"><br>
+                  <label class="mailformlabel">subject:</label><input type="text" id="mailform_subject"><br>
+                  <textarea id="mailtextarea" ></textarea><br>
+                  <input type="submit" value="send">
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="ProjectBanner">
+            <h2>Projects</h2>
+            <div class="Projects" id="Projects">          
+              <a href="./polls/"> 
+                <img src="{% static 'images/polls.png' %}" alt="Polls">
+                <p>Polls</p>
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
       <footer role="contentinfo">
-        <div class="footer-container">
-          <div class="footer-social-media">
-            <h5>Connect</h5>
-            <ul>
-              <li><a href="http://linkedin.com/in/alexjboyle" target="_blank"><img src="{% static 'images/linkedinicon.png' %}"></a></li>
-              <li><a href="https://github/Ninx103"target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
-              <li><a href="mailto:alex@paperearth.net"><img src="{% static 'images/mailicon.png' %}"></a></li>
-            </ul>
-          </div>
-        </div>
       </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="{% static 'polls/script.js' %}"></script>
+    <script src="{% static 'mysite/script.js' %}"></script>
   </body>
 </html>
