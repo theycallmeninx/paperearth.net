@@ -1,5 +1,5 @@
 html, body {
-  font-family: Arial,Helvetica,sans-serif;
+  font-family: Helvetica,sans-serif;
   margin: 0;
   height: 100%;
 }
@@ -12,34 +12,237 @@ a {
   font-weight: 700;
 }
 
-.h1 .h2 .h3 .h4 .h5 .h6 {
-  text-transform: uppercase;
-  margin-bottom: 0;
-  margin-left: 1em;
+a:link, a:visited  {
+  color: rgb(193,255,139);
 }
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-variant: small-caps;
+  margin-bottom: 0;
+  color: rgb(193,255,139);
+}
+
+/* MAIN PAGE DETAIL */
 
 .Content {
   display: block;
-  margin: 0 auto;
-  width: 95%;
-  border: solid green;
-  border-width: 0 0.2em 0 0.2em;
-  background: gold;
+  margin: 0 0;
+  width: 100%;
+  background: rgb(60,153,78);
 }
 
-.ProjectContent {
-  height: 100%;
+.MainBanner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  background: rgb(77,61,105);
+  display: block;
+}
+
+#mainbannerleft {
+  float: left;
+  width: 90%;
+  padding: 0.1em 0 0 0.3em;
+  margin: 0;
+}
+
+#mainbannerleft h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 0 1em;
+  padding-top: 0.35em;
+}
+
+#mainbannerright {
+  color: black;
+  float: right;
+  margin: 0em 1em 0em -15em;
+  text-align: right;
+}
+
+#mainnavlinks li{
+  list-style: none;
+  display: inline-block;
+  margin-left: 0;
+  border-right: 1px solid darkgreen;
+  font-style: italic;
+  padding: 0em 0.7em;
+}
+
+#HomeSplash {
+  display: block;
+  vertical-align: middle;
+  padding-top: 50px;
+  width: 100%;
+  height: 100vh;
+  border-bottom: 1px solid rgb(216,186,233);
+  border-top: 1px solid black;
+}
+
+#HomeSplash p {
+  text-align: center;
+  width: 100%;
+}
+
+/* ABOUT SECTION */
+.AboutBanner {
+  text-align: center;
+  border-bottom: 1px solid rgb(216,186,233);
+}
+
+.About {
+  padding-top: 50px;
+  width: 100%;
+  height: 70vh;
+}
+
+.Connect {
+  width: 60%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  margin-bottom: 5em;
+}
+
+.Connect h3 {
+  border-bottom: 1px solid rgb(216,186,233);
+  padding-bottom: 1em;
+}
+
+.connect-social-media {
+  padding: 0;
+  text-align: center;
+}
+
+.connect-social-media ul {
+  padding: 0;
+}
+
+.connect-social-media li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 2.5em;
+}
+
+
+/* PROJECTS DETAILS */
+
+.ProjectBanner {
+  text-align: center;
+  border-bottom: 1px solid green;
+}
+
+#Projects {
+  padding-top: 50px;
+  height: 70vh; 
+}
+
+#Projects ul {
+  padding: 0;
+}
+
+#Projects li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 2.5em;
+}
+
+.ProjectsClass {
+  display: block;
+  min-width:  150px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #7C8;
+  text-align: center;
+  padding: 1em;
+}
+
+.ProjectsClass img {
   display: block;
   margin: 0 auto;
-  width: 95%;
-  border: solid green;
-  border-width: 0 0.2em 0 0.2em;
-  background: gold;
 }
+
+.ProjectsClass p {
+  padding-top: 1em;
+  margin: 0;
+  text-align: center;
+}
+
+
+
+.mailcontainer {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(70, 70, 70, 0.7);
+  background-blend-mode: lighten;
+
+}
+
+#mailbox {
+  text-align: left;
+  padding: 1em;
+  width: 600px;
+  margin-top: 30vh;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgb(60,153,78);
+  color: rgb(216,186,233);
+}
+
+#mailclose {
+  margin: 0;
+  padding-right: 1em;
+  width: 100%;
+  height: 20px;
+}
+
+#mailclose p {
+  font-weight: 1000;
+  margin: 0;
+  text-align: right;
+}
+
+#mailclose a:link{
+  text-decoration: none;
+}
+
+#mailform input {
+  margin-bottom: 1em;
+  margin-top: 0;
+  width: 100%;
+  background: pearl;
+  border: 1px solid rgb(119,204,146);
+}
+
+#mailform label {
+  font-weight: 1000;  
+  margin-right: 1em;
+  width: 100px;
+}
+
+#mailform_textarea {
+  resize:none;
+  width: 99%;
+  height: 70px;
+}
+
+#mailform_submit {
+  width: 100px;
+}
+
+/* Polls Base Page Details*/
 
 .BlockContent {
   display: block;
   text-align: center;
+  height: 100vh;
 }
 
 .BlockContent h2 {
@@ -59,7 +262,7 @@ a {
   text-align: center;
   font-size: x-large;
   padding-bottom: 1em;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgb(167,204,130);
 }
 
 #PollsContent ol {
@@ -76,159 +279,4 @@ a {
   width: 50%;
   margin: 0 auto;
 }
-
-.MainBanner {
-  height: 50px;
-  width: 100%;
-  background: forestgreen;
-  display: block;
-}
-
-#mainbannerleft {
-  float: left;
-  width: 100%;
-  padding: 0.3em;
-  margin: 0;
-}
-
-#mainbannerleft p {
-  color: white;
-  font-size: 28px;
-  font-weight: bold;
-  text-align: left;
-  margin: 0;
-  padding: 0.2em;
-}
-
-
-#mainbannerright {
-  padding-top: 5px;
-  float: right;
-  width: 15em; 
-  margin: 0em 1em 0em -17em;
-}
-
-.AboutBanner {
-  text-align: center;
-  height: 800px;
-  border-bottom: 1px solid green;
-}
-
-.About {
-  width: 100%;
-  height: 80%;
-}
-
-.Connect {
-  width: 60%;
-  margin-right: auto;
-  margin-left: auto;
-  text-align: center;
-}
-
-.Connect h3 {
-  border-bottom: 1px solid gray;
-  margin-bottom: 1em;
-}
-
-.connect-social-media {
-  padding: 0;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.connect-social-media li {
-  list-style: none;
-  display: inline-block;
-  margin: 0 2.5em;
-}
-
-
-
-.ProjectBanner {
-  height: 500px;
-  text-align: center;
-  border-bottom: 1px solid green;
-}
-
-.Projects {
-	padding: 1em;
-	width: 9em;
-	height: 9em;
-	border: solid gold;
-	border-width: 0.2em;
-    margin-top: 2em;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background: white;
-}
-
-.Projects img {
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.Projects p {
-	margin-top: 0.25em;
-	text-align: center;
-}
-
-#mainnavlinks li{
-  list-style: none;
-  display: inline-block;
-  margin-left: 0;
-  border-right: 1px solid darkgreen;
-  font-style: italic;
-  padding: 0em 0.7em;
-}
-
-.mailformcontainer {
-  display: none;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(70, 70, 70, 0.7);
-  background-blend-mode: lighten;
-
-}
-
-.mailform {
-  padding: 1em;
-  width: 600px;
-  margin-top: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: auto;
-  background: white;
-}
-
-.mailform input {
-  margin-bottom: 1em;
-  margin-top: 0;
-  width: auto;
-}
-
-.mailform label {
-  margin-right: 1em;
-  width: 100px;
-}
-
-#mailtextarea {
-  width: 500px;
-  height: 70px;
-  border: 1px solid black;
-}
-
-a:link {
-    color: black;
-}
-
-a:visited {
-    color: black;
-}
-
 
