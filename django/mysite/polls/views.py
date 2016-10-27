@@ -51,6 +51,7 @@ def vote(request, question_id):
     try:
         cid = request.POST['choice']
         if cid == "new": #new entry
+            #todo - detect if new choice is already a choice
             selected_choice = question.choice_set.create(choice_text=request.POST['newchoicetext'], votes=0)
         else:
             selected_choice = question.choice_set.get(pk=cid)

@@ -14,15 +14,16 @@ a {
 }
 
 .h1 .h2 .h3 .h4 .h5 .h6 {
-    text-transform: uppercase;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  margin-left: 1em;
 }
 
 .Content {
 	display: block;
     margin-left: auto;
     margin-right: auto;
-	width: 75%;
-	height: 100%;
+	width: 95%;
 	border: solid green;
 	border-right-width: .2em;
 	border-left-width: .2em;
@@ -37,18 +38,76 @@ a {
 }
 
 .MainBanner {
-	height: 6.5em; /* 100px*/
-	background: forestgreen;
-	vertical-align: middle;
-	display: flex;
-	align-items: center
+  height: 50px;
+  width: 100%;
+  background: forestgreen;
+  display: block;
 }
 
-.MainBanner p {
-	color: white;
-	margin: 0em 0em 0em 1em;
-	font-size: 3.5em;
-	font-weight: bold;
+#mainbannerleft {
+  float: left;
+  width: 100%;
+  padding: 0.3em;
+}
+
+#mainbannerleft p {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: left;
+  margin: 0;
+  padding: 0.2em;
+}
+
+
+#mainbannerright {
+  padding-top: 5px;
+  float: right;
+  width: 15em; 
+  margin: 0em 1em 1em -17em;
+}
+
+.AboutBanner {
+  text-align: center;
+  height: 800px;
+  border-bottom: 1px solid green;
+}
+
+.About {
+  width: 100%;
+  height: 80%;
+}
+
+.Connect {
+  width: 60%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.Connect h3 {
+  border-bottom: 1px solid gray;
+  margin-bottom: 1em;
+}
+
+.connect-social-media {
+  padding: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.connect-social-media li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 2.5em;
+}
+
+
+
+.ProjectBanner {
+  height: 500px;
+  text-align: center;
+  border-bottom: 1px solid green;
 }
 
 .Projects {
@@ -75,6 +134,54 @@ a {
 	text-align: center;
 }
 
+#mainnavlinks li{
+  list-style: none;
+  display: inline-block;
+  margin-left: 0;
+  border-right: 1px solid darkgreen;
+  font-style: italic;
+  padding: 0em 0.7em;
+}
+
+.mailformcontainer {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(70, 70, 70, 0.7);
+  background-blend-mode: lighten;
+
+}
+
+.mailform {
+  padding: 1em;
+  width: 600px;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  background: white;
+}
+
+.mailform input {
+  margin-bottom: 1em;
+  margin-top: 0;
+  width: auto;
+}
+
+.mailform label {
+  margin-right: 1em;
+  width: 100px;
+}
+
+#mailtextarea {
+  width: 500px;
+  height: 70px;
+  border: 1px solid black;
+}
+
 a:link {
     color: black;
 }
@@ -83,31 +190,4 @@ a:visited {
     color: black;
 }
 
-.footer-container {
-  margin-right: auto;
-  margin-left: auto;
-  border-top: solid gray;
-  text-align: right;
-}
 
-.footer-social-media {
-  padding: 0;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.footer-social-media h5{
-  margin-bottom: 0;
-}
-
-.footer-social-media ul {
-  list-style: none;
-  display: inline-block;
-  margin-left: 0;
-}
-
-.footer-social-media li {
-  list-style: none;
-  display: inline-block;
-  margin-left: 0;
-}
