@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-<div id="PollsContent">
-  <div id="PollsDetails">
-    <h3>{{ question.question_text }}</h3>
-
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-    <form action="{% url 'polls:vote' question.id %}" method="post">
-
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-    {% endfor %}
-        <input type="radio" name="choice" id="newchoice" value="new"/>
-        <input type="text" name="newchoicetext" id="newchoicetext" value="New Choice..." /> <br>
-        <br>  
-        <input type="submit" value="Vote" style="width:75px;" />
-      <a style="font-size:medium;" href="{% url 'polls:results' question.id %}">View Results</a>
-    </form>
+<div id="PollsBanner">
+  <div id="PollsContent" class="PollsContent">
+      <h3>{{ question.question_text }}</h3>
+      <div id="PollsDetails">
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+          {% csrf_token %}
+          {% for choice in question.choice_set.all %}
+          <label for="choice{{ forloop.counter }}">
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+          {{ choice.choice_text }}</label>
+          {% endfor %}
+          <label>
+            <input type="radio" name="choice" id="newchoice" value="new"/>
+            <input type="text" name="newchoicetext" id="newchoicetext" value="New Choice..." />
+          </label>
+          <div id="PollDetailsLinks">
+            <input type="submit" value="Vote"/>
+            <br>
+            <p style="margin:0;">or</p>
+            <a style="font-size:medium;" href="{% url 'polls:results' question.id %}">View Results</a>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-</div>
 <script src="{% static 'polls/details_script.js' %}"></script>
 {% endblock content %}

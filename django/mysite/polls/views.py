@@ -9,6 +9,7 @@ from django.views import generic
 from django.urls import reverse
 
 from django.utils import timezone
+from django.conf.urls import url
 
 from .models import Question
 from .models import Choice
@@ -49,18 +50,32 @@ class CreateQuestionView(generic.DetailView):
 
 def new(request):
 
+    errorargs = {}
+    choiceset = []
     newpoll = request.POST['NewPoll']
     choices = request.POST.getlist('Choices')
-    
-    if newpoll and choices:
-        question = Question(question_text=newpoll, pub_date=timezone.now())
-        question.save()
-        for choice in choices:
-            newchoice = question.choice_set.create(choice_text=choice, votes=0)
-            newchoice.save()
 
-    return HttpResponseRedirect(reverse('polls:detail', args=(question.id,)))
-    # return HttpResponseRedirect(reverse('polls:index'))
+    question = None
+    if newpoll == 'Question':
+        errorargs = {'question_error_message': "Please type a question."}
+    else:
+        question = Question(question_text=newpoll, pub_date=timezone.now())
+
+    
+    for choice in choices:
+        if question and choice != "":
+            choiceset.append(question.choice_set.create(choice_text=choice, votes=0))
+    
+    if not choiceset:
+        errorargs['choice_error_message'] = "Please fill in at least one choice."
+
+    if errorargs:
+        return render(request, 'polls/new.html', errorargs)
+    else:
+        question.save()
+        for choice in choiceset:
+            choice.save()
+        return HttpResponseRedirect(reverse('polls:detail', args=(question.id,)))
 
 def vote(request, question_id): 
     question = get_object_or_404(Question, pk=question_id)
@@ -82,4 +97,7 @@ def vote(request, question_id):
         question.save()
         selected_choice.votes += 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        print selected_choice.id
+        # return HttpResponseRedirect(reverse('polls:results', args=(question.id,selected_choice.id)))
+        return HttpResponseRedirect(reverse('polls:results', kwargs={'pk':question.id}))
+

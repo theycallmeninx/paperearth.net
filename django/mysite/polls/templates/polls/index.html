@@ -1,31 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="PollsContent">
-  <a href="{% url 'polls:new' %}" style="text-decoration:none;"><div class="PollsContent"><h3>Create New Poll</h3></div></a>
-  <div class="PollsContent">
-    <h3>Most Recent Polls</h3>
-    {% if indexset.latest_questions %}
-        <ol>
-        {% for question in indexset.latest_questions %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-        {% endfor %}
-        </ol>
-    {% else %}
-        <p style="width:40%;margin:1em auto;padding-bottom:1em;">No polls are available.</p>
-    {% endif %}
-  </div>
-  <div class="PollsContent">
-    <h3>Highest Voted Polls</h3>
-    {% if indexset.highest_questions %}
-        <ol>
-        {% for question in indexset.highest_questions %}
-        <li>({{ question.tally }})<a href="{% url 'polls:detail' question.id %}" style="margin-left:1em;">{{ question.question_text }}</a></li>
-        {% endfor %}
-        </ol>
-    {% else %}
-        <p style="width:40%;margin:1em auto;padding-bottom:1em;">No polls are available.</p>
-    {% endif %}
+<div id="PollsBanner">
+  <div id="PollsContent" >
+    <a href="{% url 'polls:new' %}" style="text-decoration:none;"><div class="PollsContent" style="margin-top:0;"><h3>Create New Poll</h3></div></a>
+    <div class="PollsContent">
+      <h3>Most Recent Polls</h3>
+      {% if indexset.latest_questions %}
+          <ol>
+          {% for question in indexset.latest_questions %}
+          <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+          {% endfor %}
+          </ol>
+      {% else %}
+          <p style="width:40%;margin:1em auto;padding-bottom:1em;">No polls are available.</p>
+      {% endif %}
+    </div>
+    <div class="PollsContent">
+      <h3>Highest Voted Polls</h3>
+      {% if indexset.highest_questions %}
+          <ol>
+          {% for question in indexset.highest_questions %}
+          <li>({{ question.tally }})<a href="{% url 'polls:detail' question.id %}" style="margin-left:1em;">{{ question.question_text }}</a></li>
+          {% endfor %}
+          </ol>
+      {% else %}
+          <p style="width:40%;margin:1em auto;padding-bottom:1em;">No polls are available.</p>
+      {% endif %}
+    </div>
   </div>
 </div>
 {% endblock content %}

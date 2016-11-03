@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="PollsContent">
-  <div id="PollsDetails">
+<div id="PollsBanner">
+  <div class="PollsContent" id="PollsContent">
     <h3>{{ question.question_text }}</h3>
-    <ul>
-      {% for choice in question.choice_set.all %}
-          <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-      {% endfor %}
-    </ul>
-    <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+    <div id="PollsResults">      
+      <ul>
+        {% for choice in question.choice_set.all %}
+            {% if selected_choice == choice.id %}<p><strong>{% endif %}
+            <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% if selected_choice.id == choice.id %}</strong></p>{% endif %}
+        {% endfor %}
+      </ul>
+      <div id="PollsResultsLinks">      
+        <a href="{% url 'polls:detail' question.id %}">Vote again?</a> OR
+        <a href="{% url 'polls:index' %}">Back to Polls</a>
+      </div>
+    </div>
   </div>
 </div>
   
