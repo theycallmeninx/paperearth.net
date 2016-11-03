@@ -14,23 +14,17 @@ from .models import Question
 from .models import Choice
 from .forms import PollsForm
 
-class QuestionCreate(generic.edit.CreateView):
-    template_name = 'polls/new.html'
-    model = Question
-    fields = ['question_text']
-    success_url = '/polls'
 
-    def form_valid(self, form):
-        form.submit_question()
-        return super(QuestionCreate, self).form_valid(form)
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
+    context_object_name = 'indexset'
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        queryset = {'latest_questions': Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5],
+                    'highest_questions': Question.objects.filter().order_by('-tally')[:5]}
+        return queryset;
 
 
 class DetailView(generic.DetailView):
@@ -45,6 +39,28 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+class CreateQuestionView(generic.DetailView):
+    model = Question
+    template_name = 'polls/new.html'
+
+    def get_object(self):
+        return None
+
+def new(request):
+
+    newpoll = request.POST['NewPoll']
+    choices = request.POST.getlist('Choices')
+    
+    if newpoll and choices:
+        question = Question(question_text=newpoll, pub_date=timezone.now())
+        question.save()
+        for choice in choices:
+            newchoice = question.choice_set.create(choice_text=choice, votes=0)
+            newchoice.save()
+
+    return HttpResponseRedirect(reverse('polls:detail', args=(question.id,)))
+    # return HttpResponseRedirect(reverse('polls:index'))
 
 def vote(request, question_id): 
     question = get_object_or_404(Question, pk=question_id)
@@ -62,6 +78,8 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
+        question.tally += 1
+        question.save()
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))

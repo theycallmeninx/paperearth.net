@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="Content">    
-      <div class="MainBanner">
+      <div id="MainBanner">
         <div id="mainbannerleft">
           <a href="/"><img style="float:left;" size="75%" src="{% static 'images/homeicon2.png' %}"></a>
           <h1>Paper Earth! Projects</h1>
@@ -49,11 +49,9 @@
                   <a href="#" onClick="$('#mailcontainer').hide();"><div style="float:right;"><p>X</p></div></a>
                 </div>
                 <div id="mailform">
-                  <form>
-                    <label>email:</label><input type="email" id="mailform_email"><br>
-                    <label>subject:</label><input type="text" id="mailform_subject"><br>
-                    <textarea id="mailform_textarea" ></textarea><br>
-                    <input id="mailform_submit" type="submit" value="send">
+                  <form action="" method="post">{% csrf_token %}
+                      {{ form.as_p }}
+                      <input type="submit" value="Send message" />
                   </form>
                 </div>
               </div>
