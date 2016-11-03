@@ -1,22 +1,6 @@
 /*jslint node: true */
 "use strict";
 
-/* New Poll Page */
-
-var NewPoll = document.getElementById("NewPoll");
-
-NewPoll.onfocus = function () {
-  if (this.value === "Question") {
-    this.value = "";
-  }
-};
-
-NewPoll.onblur = function () {
-  if (this.value === "") {
-    this.value = "Question";
-  }
-};
-
 /* Details Page */
 
 var newchoicetext = document.getElementById("newchoicetext");

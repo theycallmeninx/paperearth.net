@@ -32,14 +32,15 @@ h1, h2, h3, h4, h5, h6 {
   background: rgb(60,153,78);
 }
 
-.MainBanner {
+#MainBanner {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
   height: 50px;
   width: 100%;
-  background: rgb(77,61,105);
-  display: block;
+  background: rgba(77,61,105, 0.7);
+  box-shadow: 0 0 25px;
 }
 
 #mainbannerleft {
@@ -158,6 +159,7 @@ h1, h2, h3, h4, h5, h6 {
   background: #7C8;
   text-align: center;
   padding: 1em;
+  box-shadow: 0px 3px 8px rgb(40, 40, 40);
 }
 
 .ProjectsClass img {
@@ -170,8 +172,6 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   text-align: center;
 }
-
-
 
 .mailcontainer {
   display: none;
@@ -226,20 +226,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: 1em;
   width: 100px;
 }
-
-#mailform_textarea {
-  resize:none;
-  width: 99%;
-  height: 70px;
-}
-
-#mailform_submit {
-  width: 100px;
-}
-
 /* Polls Base Page Details*/
 
 .BlockContent {
+  padding-top: 50px;
   display: block;
   text-align: center;
   height: 100vh;
@@ -249,34 +239,103 @@ h1, h2, h3, h4, h5, h6 {
   color: white;
 }
 
-#latestPolls {
-  width: 40%;
-  margin: 0 auto;
+.PollsContent {
+  margin: 2.5em auto;
+  background: rgb(193,255,139);
+  color: rgb(77,61,105);
+  box-shadow: 0px 3px 8px rgb(40, 40, 40);
 }
 
 #PollsContent {
   text-align: left;
+  width: 40%;
+  margin: 0 auto;
+  font-size: large;
+  color: rgb(77,61,105);
 }
 
 #PollsContent h3 {
   text-align: center;
   font-size: x-large;
-  padding-bottom: 1em;
-  border-bottom: 1px solid rgb(167,204,130);
+  padding: 0.6em;
+  color: rgb(77,61,105);
+  background: rgb(119,204,146);
 }
 
 #PollsContent ol {
   list-style-position: inside;
   text-align: left;
+  line-height: 3em;
+}
+
+#PollsContent a {
+  color: rgb(77,61,105);
 }
 
 #PollsDetails {
-  width: 40%;
-  margin: 0 auto;
+  width: 100%;
+}
+
+#PollsDetails li ul {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 #PollsDetails form {
-  width: 50%;
   margin: 0 auto;
+  width: 100%;
 }
 
+/* New Poll Style*/
+
+#NewPollBox {
+  padding: 1em 3em 2em 3em;
+  width: 40%;
+  margin: 1em auto;
+  color: rgb(77,61,105);
+  background: rgb(119,204,146);
+  text-align: left;
+  line-height: 2em;
+  box-shadow: 0 3px 10px;
+  font-weight: 700;
+}
+
+
+#NewPoll {
+  width: 100%;
+  line-height: 2em;
+  margin: 0;
+}
+
+#NewPollBox a {
+  text-decoration: none;
+}
+
+#NewChoices input {
+  display: block;
+  width: 70%;
+  line-height: 2em;
+}
+
+#NewPollBox label{
+  display: block;
+  margin: 1em 0 0.5em 0;
+}
+
+#NewPollBox img {
+  margin: 0 1em -10px 0;
+}
+
+.PollFormRow {
+  width: 100%;
+}
+
+#PollSubmit {
+  border: 2px solid rgb(193,255,139);
+  height: 3em;
+  background: rgb(60,153,78);
+  color: rgb(77,61,105);
+  font-weight: 700;
+  margin: 1em auto;
+}

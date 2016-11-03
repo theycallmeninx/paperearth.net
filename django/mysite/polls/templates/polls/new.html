@@ -1,9 +1,32 @@
+
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
 {% block content %}
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="button" value="Add Choice" />
-        <input type="submit" value="Submit Question" />
-    </form>
+  <div id="NewPollBanner">
+    <div id="NewPollBox">
+      <form action="{% url 'polls:submitnew' %}" method="post">
+        {% csrf_token %}
+        <label>Question/Poll Text:
+          <input name="NewPoll" id="NewPoll" taype="text" value="Question">
+        </label>
+        <div id="NewChoices">
+          <label>Choice 1<input name="Choices" id="Choice1" type="text"></label>
+          <label>Choice 2<input name="Choices" id="Choice2" type="text"></label>
+        </div>
+        <div id="AddNewChoice">
+          <label>
+            <a href="#">
+                <img src="{% static 'images/add.png' %}">Add Choice
+            </a>
+          </label>          
+        </div>
+        <div>
+          <input id="PollSubmit" type="submit" value="Submit Question" />
+        </div>
+      </form>
+    </div>
+  </div>
+<script src="{% static 'polls/newpolls_script.js' %}"></script>
 {% endblock content %}

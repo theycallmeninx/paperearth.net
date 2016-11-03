@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="Content">    
-      <div class="MainBanner">
+      <div id="MainBanner">
         <div id="mainbannerleft">
           <a href="/"><img style="float:left;" size="75%" src="{% static 'images/homeicon2.png' %}"></a>
           <h1>Paper Earth! Projects</h1>
@@ -18,7 +18,7 @@
           <ul id="mainnavlinks">
             <li><a href="/" alt="Home">home</a></li>
             <li><a href="/#About" alt="About Me">about</a></li>
-            <li><a href="/#Projects" alt="Projects">projects</a></li>
+            <li style="border-width:0;"><a href="/#Projects" alt="Projects">projects</a></li>
           </ul>
         </div>
       </div>
@@ -33,6 +33,5 @@
       </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="{% static 'polls/script.js' %}"></script>
   </body>
 </html>
