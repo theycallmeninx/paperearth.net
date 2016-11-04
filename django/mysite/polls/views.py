@@ -55,16 +55,13 @@ def new(request):
     newpoll = request.POST['NewPoll']
     choices = request.POST.getlist('Choices')
 
-    question = None
+    question = Question(question_text=newpoll, pub_date=timezone.now())
     if newpoll == 'Question':
         errorargs = {'question_error_message': "Please type a question."}
-    else:
-        question = Question(question_text=newpoll, pub_date=timezone.now())
 
-    
     for choice in choices:
-        if question and choice != "":
-            choiceset.append(question.choice_set.create(choice_text=choice, votes=0))
+        if choice != "":
+            choiceset.append(choice)
     
     if not choiceset:
         errorargs['choice_error_message'] = "Please fill in at least one choice."
@@ -74,7 +71,8 @@ def new(request):
     else:
         question.save()
         for choice in choiceset:
-            choice.save()
+            newchoice = question.choice_set.create(choice_text=choice, votes=0)
+            newchoice.save()
         return HttpResponseRedirect(reverse('polls:detail', args=(question.id,)))
 
 def vote(request, question_id): 
