@@ -11,9 +11,20 @@ function initMap() {
 }
 
 
-var mailform = document.getElementById("mailform");
 
-var mailformcontainer = document.getElementById("mailcontainer");
+$("#myCarousel").carousel();
+
+$(".item").click(function () {
+  $("#myCarousel").carousel(1);
+});
+
+$(".left").click(function () {
+  $("#myCarousel").carousel("prev");
+});
+
+var mailform = document.getElementById("MailForm");
+
+var mailformcontainer = document.getElementById("MailContainer");
 
 mailform.onclick = function () {
   var e = window.event;
@@ -28,3 +39,4 @@ mailformcontainer.onclick = function () {
     this.style.display = "none";
   }
 };
+

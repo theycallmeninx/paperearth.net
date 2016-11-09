@@ -5,7 +5,10 @@
     <title>Paper Earth!</title>
     <meta name="description" content="Django Web App for creating and voting on polls">
     <title>Django Polls Web App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
+    <!-- Latest compiled CSS for Bootstrap -->
+    
   </head>
   <body>
     <div class="Content">    
@@ -16,59 +19,103 @@
         </div>
         <div id="mainbannerright">
           <ul id="mainnavlinks">
-            <li><a href="/" alt="Home">home</a></li>
-            <li><a href="/#About" alt="About Me">about</a></li>
-            <li style="border-width:0;"><a href="/#Projects" alt="Projects">projects</a></li>
+            <li><a href="/" alt="Home">home</a></li>            
+            <li><a href="/#Projects" alt="Projects">projects</a></li>
+            <li style="border-width:0;"><a href="/#About" alt="About Me">about</a></li>
+
           </ul>
         </div>
       </div>
       <main role="main">
         <section>
           <div id="HomeSplash">
-            <p style="text-align:center;"> Splash Homepage Graphic Here </p>
-          </div>
-        </section>
-        <section>
-          <div class="AboutBanner">
-            <div class="About" id="About">
-              <h2>About</h2>
-            </div>
-            <div class="Connect">
-              <div class="connect-social-media">
-                <h3>Connect</h3>
-                <ul>
-                  <li><a href="http://linkedin.com/in/alexjboyle" target="_blank"><img src="{% static 'images/linkedinicon.png' %}"></a></li>
-                  <li><a href="https://github/Ninx103" target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
-                  <li><a href="#" onClick="$('#mailcontainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
-                </ul>
-              </div>
-            </div>
-            <div id="mailcontainer" class="mailcontainer" >
-              <div class="mailbox" id="mailbox">
-                <div id="mailclose">
-                  <a href="#" onClick="$('#mailcontainer').hide();"><div style="float:right;"><p>X</p></div></a>
-                </div>
-                <div id="mailform">
-                  <form action="" method="post">{% csrf_token %}
-                      {{ form.as_p }}
-                      <input type="submit" value="Send message" />
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div class="ProjectBanner">
-            <div id="Projects">
+            <div id="ProjectsBanner">
               <h2>Projects</h2>
-              <ul>
-                <li>
-                  <a href="./polls/"><div id="PollsProject" class="ProjectsClass">
-                  <img src="{% static 'images/polls.png' %}" alt="Polls"><p>Polls</p>
-                  </div></a>                    
+            <div id="ProjectsCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#ProjectsCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#ProjectsCarousel" data-slide-to="1">
                 </li>
-              </ul>
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div id="ProjectsCarouselWrapper" class="carousel-inner" role="listbox">
+                  <div class="projectitem item active" style="background: url( {% static 'images/polls.png' %} ) no-repeat center center;">
+                    <a href="./polls/">
+                      <div class="projects">
+                        <h3>Polls</h3>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="projectitem item" style="background: url( {% static 'images/polls.png' %} ) no-repeat center center;">
+                    <a href="./maps/"> 
+                      <div class="projects">
+                        <h3>Maps</h3>
+                      </div>
+                    </a>
+                  </div>
+              </div>
+
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#ProjectsCarousel" role="button" data-slide="prev" style="background:rgba(0,0,0,0);">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#ProjectsCarousel" role="button" data-slide="next" style="background:rgba(0,0,0,0);">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div id="AboutBanner">
+            <div id="About">
+              <div id="AboutHeader">
+                <h2>About</h2>
+                <p>&ldquo;creating the world the way you want it&rdquo;</p>
+              </div>
+              <div id="AboutContent">
+                <p>
+                &ldquo;Since high school, I have known what I have wanted to do for a living and as I continue down the road as an engineer experienced in both front-end and back-end development, I can say I always bring my very best effort with me and to my work because it’s what I enjoy doing the most. </p>
+                <p>
+                  I really enjoy the process of coding and software development ...&rdquo;
+                </p>
+              </div>
+              <div id="Connect">
+                <div id="connect-social-media">
+                  <h3>Connect</h3>
+                  <ul>
+                    <li><a href="http://linkedin.com/in/alexjboyle" target="_blank"><img src="{% static 'images/linkedinicon.png' %}"></a></li>
+                   <li><a href="https://docs.google.com/a/paperearth.net/document/d/1oqvodL-hSTFbbILeD1XXFmMv4yuXkMxkYe7W0mVKvFs/edit?usp=sharing" target="_blank"><img src="{% static 'images/resumewordicon.png' %}"></a></li> 
+                    <li><a href="https://drive.google.com/open?id=0B46vjoxOKBlZMERYUU13NlJnU1U" target="_blank"><img src="{% static 'images/resumepdficon.png' %}"></a></li> 
+                    <li><a href="https://github.com/Ninx103" target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
+                    <li><a href="#" onClick="$('#MailContainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div id="MailContainer" class="MailContainer" >
+                <div class="MailBox" id="MailBox">
+                  <div id="MailClose">
+                    <a href="#" onClick="$('#MailContainer').hide();"><div style="float:right;"><p>X</p></div></a>
+                  </div>
+                  <div id="MailForm">
+                    <form action="{% url 'email' %}" method="post">
+                      {% csrf_token %}
+                      <label>email address:
+                        <br>
+                        <input placeholder="email@domain.com" name="Email" id="Email" type="email">
+                      </label>
+                      <div id="MailTextBox">
+                        <label><textarea placeholder="Any additional thoughts/comments?" name="EmailContent" id="EmailContent"></textarea></label>
+                      </div>
+                      <input id="MailSubmit" type="submit" value="Send message" />
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -77,6 +124,8 @@
       </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript for Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="{% static 'mysite/script.js' %}"></script>
   </body>
 </html>

@@ -24,7 +24,7 @@
         <form action="{% url 'polls:submitnew' %}" method="post">
           {% csrf_token %}
           <label>Question/Poll Text:
-            <input name="NewPoll" id="NewPoll" taype="text" value="Question">
+            <input placeholder="Question" name="NewPoll" id="NewPoll" taype="text">
           </label>
           <div id="NewChoices">
             <label>Choice 1<input name="Choices" id="Choice1" type="text"></label>
