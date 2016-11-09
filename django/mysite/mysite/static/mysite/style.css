@@ -2,7 +2,9 @@ html, body {
   font-family: Helvetica,sans-serif;
   margin: 0;
   height: 100%;
-  background: rgb(60,153,78);
+  background: rgb(246, 250, 255);
+  color: rgb(77,61,105);
+  /*background: rgb(60,153,78);*/
 }
 
 div {
@@ -14,14 +16,14 @@ a {
 }
 
 a:link, a:visited  {
-  color: rgb(193,255,139);
+  color: rgb(77,61,105);
 }
 
 
 h1, h2, h3, h4, h5, h6 {
   font-variant: small-caps;
   margin-bottom: 0;
-  color: rgb(193,255,139);
+  color: darkgreen;
   font-weight: 600;
 }
 
@@ -31,7 +33,6 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   margin: 0 0;
   width: 100%;
-  background: rgb(60,153,78);
 }
 
 #MainBanner {
@@ -46,6 +47,11 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 100;
 }
 
+#MainBanner a:link, #MainBanner a:visited  {
+  color: rgb(193,255,139);
+}
+
+
 #mainbannerleft {
   float: left;
   width: 90%;
@@ -58,6 +64,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   margin: 0 0 0 1em;
   padding-top: 0.35em;
+  color: rgb(193,255,139);
 }
 
 #mainbannerright {
@@ -127,49 +134,94 @@ h1, h2, h3, h4, h5, h6 {
   display: table;
 }
 
+.projectitem a:hover{
+  text-decoration: none;
+}
+
 /* ABOUT SECTION */
 #AboutBanner {
   text-align: center;
-  border-bottom: 1px solid rgb(216,186,233);
-  height: 80vh;
+  height: 100vh;
 }
 
-#AboutHeader {
+#About {
   padding-top: 50px;
+}
+
+#About h3 {
+  border-bottom: 1px solid rgb(216,186,233);
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+
+
+#AboutHeader {
   width: 100%;
 }
+
+#AboutHeader p {
+  font-size: 32px;
+  line-height: 50px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  margin: 2em auto 0 auto;
+}
+
 
 #AboutContent {
   margin: 0 auto;
   width: 70%;
-  padding: 10em 0;
+  height: 30vh;
+  padding: 3em 0;
 }
 
-#AboutHeader p {
-  font-size: 25px;
-  font-weight: 10;
-  line-height: 50px;
-}
+
 
 #AboutContent p {
   text-align: center;
   font-size: 15px;
-  font-weight: 10;
+  font-weight: 100;
   line-height: 50px;
+  font-style: italic;
 }
+
+/* ABOUT EXPERIENCE*/
+#AboutSkills {
+  width: 60vw;
+  height: 25vh;
+  margin: 0 auto;
+}
+
+#AboutSkills ul {
+  list-style: none;
+  padding: 0;
+}
+
+#SkillsLanguages {
+  float: left;
+  margin-left: 10em;
+}
+
+#SkillsProducts {
+  margin: 0 10em 0 -10em;
+  float: right;
+}
+
+.skills {
+  margin: 0 auto;
+}
+
+
 
 #Connect {
   width: 60%;
+  height: 20vh;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
   margin-bottom: 5em;
 }
 
-#Connect h3 {
-  border-bottom: 1px solid rgb(216,186,233);
-  padding-bottom: 1em;
-}
 
 #connect-social-media {
   padding: 0;
@@ -209,18 +261,17 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 30vh;
   margin-left: auto;
   margin-right: auto;
-  background: rgb(60,153,78);
-  color: rgb(216,186,233);
+  background: rgb(250, 250, 255);
 }
 
 #MailClose {
-  margin: 0;
-  width: 100%;
-  height: 20px;
+  margin: 0 auto;
+  width: 1em;
+  float: right;
 }
 
 #MailClose p {
-  font-weight: 1000;
+  font-weight: 700;
   margin: 0;
   text-align: right;
 }
@@ -232,16 +283,20 @@ h1, h2, h3, h4, h5, h6 {
 #Email {
   width: 30vw;
   font-weight: 100;
-  border: 1px solid rgb(119,204,146);
   line-height: 30px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 #MailForm label {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   color: rgb(77,61,105);
   width: 100%;
+}
+
+#MailForm p {
+  text-align: center;
+  color: black;
 }
 
 #MailForm textarea {
@@ -249,13 +304,13 @@ h1, h2, h3, h4, h5, h6 {
   resize: none;
   width: 43vw;
   height: 11em;
-  font-size: 14px;
+  font-size: 12aaaaaaapx;
 }
 
 
 #MailSubmit {
   height: 3em;
-  background: rgb(119,204,146);
+  background: rgb(250, 250, 255);
   color: rgb(77,61,105);
   margin: 1em auto;
   box-shadow: 0 2px 3px;
@@ -289,7 +344,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .PollsContent {
-  background: rgb(193,255,139);
+  background: white;
   box-shadow: 0px 3px 8px rgb(40, 40, 40);
 }
 
@@ -334,19 +389,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #PollDetailsLinks input {
-  border: 2px solid rgb(60,153,78);
-  height: 3em;
-  background: rgb(119,204,146);
+  height: 2em;
+  background: rgb(246, 250, 255);
   color: rgb(77,61,105);
   font-weight: 700;
   margin: 1em auto;
-  box-shadow: 0 2px 3px;
   width: 80%;
 }
 
 #PollsResults {
   text-align: center;
-  padding-bottom: 50px;
+  padding: 3em 0;
 }
 
 #PollsResults ul{

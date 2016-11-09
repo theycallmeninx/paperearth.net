@@ -3,7 +3,11 @@
 {% block content %}
 <div id="PollsBanner">
   <div id="PollsContent" >
-    <a href="{% url 'polls:new' %}" style="text-decoration:none;"><div class="PollsContent" style="margin-top:0;"><h3>Create New Poll</h3></div></a>
+    <a href="{% url 'polls:new' %}" style="text-decoration:none;">
+      <div class="PollsContent" style="margin-top:0;">
+        <h3>Create New Poll</h3>
+      </div>
+    </a>
     <div class="PollsContent">
       <h3>Most Recent Polls</h3>
       {% if indexset.latest_questions %}

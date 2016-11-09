@@ -73,9 +73,9 @@
         <section>
           <div id="AboutBanner">
             <div id="About">
-              <div id="AboutHeader">
-                <h2>About</h2>
-                <p>&ldquo;creating the world the way you want it&rdquo;</p>
+              <h2>About</h2>
+              <div id="AboutHeader">                
+                <p>Creating the world the way you want it.</p>
               </div>
               <div id="AboutContent">
                 <p>
@@ -83,6 +83,31 @@
                 <p>
                   I really enjoy the process of coding and software development ...&rdquo;
                 </p>
+              </div>
+              <br>
+              <div id="AboutSkills">
+                <h3>Experience</h3>
+                <div id="SkillsLanguages" class="skills">
+                  <h4>Languages</h4>
+                  <ul>
+                    <li>Python 2.7</li>
+                    <li>HTML5/CSS3/Javascript</li>
+                    <li>BASH</li>
+                    <li>C++</li>
+                    <li>SQL</li>
+                    <li>Angular.js</li>
+                  </ul>
+                </div>
+                <div id="SkillsProducts" class="skills">
+                  <h4>Products</h4>
+                  <ul>
+                    <li>Django Project v1.10</li>
+                    <li>Git &amp; GitHub</li>
+                    <li>Atlassian's Confluence &amp; Jira</li>
+                    <li>Microsoft Office</li>
+                    <li>Google Office Products</li>
+                  </ul>
+                </div>
               </div>
               <div id="Connect">
                 <div id="connect-social-media">
@@ -92,24 +117,31 @@
                    <li><a href="https://docs.google.com/a/paperearth.net/document/d/1oqvodL-hSTFbbILeD1XXFmMv4yuXkMxkYe7W0mVKvFs/edit?usp=sharing" target="_blank"><img src="{% static 'images/resumewordicon.png' %}"></a></li> 
                     <li><a href="https://drive.google.com/open?id=0B46vjoxOKBlZMERYUU13NlJnU1U" target="_blank"><img src="{% static 'images/resumepdficon.png' %}"></a></li> 
                     <li><a href="https://github.com/Ninx103" target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
-                    <li><a href="#" onClick="$('#MailContainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
+                    <li><a href="#About" onClick="$('#MailContainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
                   </ul>
                 </div>
               </div>
               <div id="MailContainer" class="MailContainer" >
                 <div class="MailBox" id="MailBox">
-                  <div id="MailClose">
-                    <a href="#" onClick="$('#MailContainer').hide();"><div style="float:right;"><p>X</p></div></a>
+                  <div style="height:2em;">
+                    <a href="#About" onClick="$('#MailContainer').hide();">
+                      <div id="MailClose">
+                        <p>X</p>
+                      </div>
+                    </a>
                   </div>
                   <div id="MailForm">
                     <form action="{% url 'email' %}" method="post">
                       {% csrf_token %}
-                      <label>email address:
+                      <p>Contact me if you have any questions relating to the site or if you are interested in any web-related services.
+                      </p>
+                      <label>
+                        email:
                         <br>
-                        <input placeholder="email@domain.com" name="Email" id="Email" type="email">
+                        <input placeholder="youremail@domain.com" name="Email" id="Email" type="email">
                       </label>
                       <div id="MailTextBox">
-                        <label><textarea placeholder="Any additional thoughts/comments?" name="EmailContent" id="EmailContent"></textarea></label>
+                        <label><textarea placeholder="Any thoughts/comments?" name="EmailContent" id="EmailContent"></textarea></label>
                       </div>
                       <input id="MailSubmit" type="submit" value="Send message" />
                     </form>
