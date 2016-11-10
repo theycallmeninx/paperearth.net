@@ -112,12 +112,47 @@
               <div id="Connect">
                 <div id="connect-social-media">
                   <h3>Connect</h3>
-                  <ul>
-                    <li><a href="http://linkedin.com/in/alexjboyle" target="_blank"><img src="{% static 'images/linkedinicon.png' %}"></a></li>
-                   <li><a href="https://docs.google.com/a/paperearth.net/document/d/1oqvodL-hSTFbbILeD1XXFmMv4yuXkMxkYe7W0mVKvFs/edit?usp=sharing" target="_blank"><img src="{% static 'images/resumewordicon.png' %}"></a></li> 
-                    <li><a href="https://drive.google.com/open?id=0B46vjoxOKBlZMERYUU13NlJnU1U" target="_blank"><img src="{% static 'images/resumepdficon.png' %}"></a></li> 
-                    <li><a href="https://github.com/Ninx103" target="_blank"><img src="{% static 'images/giticon.png' %}"></a></li>
-                    <li><a href="#About" onClick="$('#MailContainer').show();"><img src="{% static 'images/mailicon.png' %}"></a></li>
+                  <ul id="ConnectList">
+                    <li>
+                      <a href="http://linkedin.com/in/alexjboyle" target="_blank">
+                        <div class="connect">
+                          <img src="{% static 'images/linkedinicon.png' %}">
+                          <div class="connect-overlay"></div>
+                        </div>
+                      </a>
+                    </li>
+                   <li>
+                     <a href="https://docs.google.com/a/paperearth.net/document/d/1oqvodL-hSTFbbILeD1XXFmMv4yuXkMxkYe7W0mVKvFs/edit?usp=sharing" target="_blank">
+                       <div class="connect">
+                         <img src="{% static 'images/resumewordicon.png' %}">
+                           <div class="connect-overlay"></div>
+                       </div>                       
+                     </a>
+                   </li> 
+                   <li>
+                     <a href="https://drive.google.com/open?id=0B46vjoxOKBlZMERYUU13NlJnU1U" target="_blank">
+                       <div class="connect">
+                         <img src="{% static 'images/resumepdficon.png' %}">
+                           <div class="connect-overlay"></div>
+                       </div>                       
+                     </a>
+                   </li> 
+                    <li>
+                      <a href="https://github.com/Ninx103" target="_blank">
+                        <div class="connect">
+                         <img src="{% static 'images/giticon.png' %}">
+                           <div class="connect-overlay"></div>
+                       </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#About" onClick="$('#MailContainer').show();">
+                        <div class="connect">
+                         <img src="{% static 'images/mailicon.png' %}">
+                           <div class="connect-overlay"></div>
+                       </div>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>

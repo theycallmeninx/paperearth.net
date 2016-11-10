@@ -1,3 +1,12 @@
+/* Bootstrap override */
+
+.carousel-indicators li {
+  background-color: grey;
+}
+.carousel-indicators .active {
+  background-color: rgb(77,61,105);
+}
+
 html, body {
   font-family: Helvetica,sans-serif;
   margin: 0;
@@ -161,9 +170,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #AboutHeader p {
-  font-size: 32px;
+  font-size: 36px;
   line-height: 50px;
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  letter-spacing: -0.065em;
+  font-weight: 500;
   margin: 2em auto 0 auto;
 }
 
@@ -179,7 +189,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #AboutContent p {
   text-align: center;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 100;
   line-height: 50px;
   font-style: italic;
@@ -199,11 +209,11 @@ h1, h2, h3, h4, h5, h6 {
 
 #SkillsLanguages {
   float: left;
-  margin-left: 10em;
+  margin-left: 15em;
 }
 
 #SkillsProducts {
-  margin: 0 10em 0 -10em;
+  margin: 0 15em 0 -10em;
   float: right;
 }
 
@@ -223,19 +233,42 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
+.connect {
+  position: relative;
+  margin: 2%;
+  width: 3em;
+  height: 3em;
+}
+.connect img {
+  max-width: 100%;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.connect:hover img {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+
+
 #connect-social-media {
   padding: 0;
   text-align: center;
 }
 
 #connect-social-media ul {
-  padding: 1.5em 0em;
+  padding: 0;
+  height: 100px;
 }
 
 #connect-social-media li {
+  text-align: center;
   list-style: none;
+  margin: 1em 3em;
+  padding: 0;
   display: inline-block;
-  margin: 0 2.5em;
 }
 
 .MailContainer {
