@@ -30,7 +30,6 @@ a:link, a:visited  {
 
 
 h1, h2, h3, h4, h5, h6 {
-  font-variant: small-caps;
   margin-bottom: 0;
   color: darkgreen;
   font-weight: 600;
@@ -92,9 +91,15 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0em 0.7em;
 }
 
-#HomeSplash {
+
+
+/* PROJECTS DETAILS */
+
+
+#Projects {
   display: block;
   vertical-align: middle;
+  text-align: center;
   padding-top: 50px;
   width: 100%;
   height: 100vh;
@@ -102,41 +107,25 @@ h1, h2, h3, h4, h5, h6 {
   border-top: 1px solid black;
 }
 
-#HomeSplash p {
-  text-align: center;
+#Projects p {
+  
   width: 100%;
 }
 
-
-/* PROJECTS DETAILS */
-
-#Projects {
-  padding-top: 50px; 
-}
-
-#Projects ul {
-  padding: 0;
-}
-
-#Projects li {
-  list-style: none;
-  display: inline-block;
-  margin: 0 2.5em;
-}
-
-#ProjectsBanner {
+#Projects h3{
   margin: 0 auto;
   text-align: center;
   padding-top: 10px;
+  font-size: x-large;
 }
 
 .projects {
   height: 80vh;
-  width: 100vh;
+  width: 100vw;
   margin: 0 auto;
   display: table-cell;
   vertical-align: bottom;
-  padding-bottom: 15em;
+  padding-bottom: 5em;
 }
 
 .projectitem {
@@ -160,7 +149,8 @@ h1, h2, h3, h4, h5, h6 {
 #About h3 {
   border-bottom: 1px solid rgb(216,186,233);
   padding-bottom: 1em;
-  margin-bottom: 1em;
+  margin: 0 auto;
+  width: 60vw;
 }
 
 
@@ -181,7 +171,7 @@ h1, h2, h3, h4, h5, h6 {
 #AboutContent {
   margin: 0 auto;
   width: 70%;
-  height: 30vh;
+  height: 25em;
   padding: 3em 0;
 }
 
@@ -197,8 +187,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ABOUT EXPERIENCE*/
 #AboutSkills {
-  width: 60vw;
-  height: 25vh;
+  height: 15em;
   margin: 0 auto;
 }
 
@@ -209,11 +198,11 @@ h1, h2, h3, h4, h5, h6 {
 
 #SkillsLanguages {
   float: left;
-  margin-left: 15em;
+  margin-left: 25vw;
 }
 
 #SkillsProducts {
-  margin: 0 15em 0 -10em;
+  margin: 0 25vw 0 -30vw;
   float: right;
 }
 
@@ -224,8 +213,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 #Connect {
-  width: 60%;
-  height: 20vh;
+  height: 10em;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
