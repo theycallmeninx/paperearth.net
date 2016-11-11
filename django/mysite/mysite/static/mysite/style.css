@@ -101,10 +101,14 @@ h1, h2, h3, h4, h5, h6 {
   vertical-align: middle;
   text-align: center;
   padding-top: 50px;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   border-bottom: 1px solid rgb(216,186,233);
   border-top: 1px solid black;
+}
+
+#ProjectsCarousel {
+  height: 95%;
 }
 
 #Projects p {
@@ -125,7 +129,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
   display: table-cell;
   vertical-align: bottom;
-  padding-bottom: 5em;
+  padding-bottom: 3.5em;
 }
 
 .projectitem {
@@ -187,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ABOUT EXPERIENCE*/
 #AboutSkills {
-  height: 15em;
+  height: 21em;
   margin: 0 auto;
 }
 
@@ -198,16 +202,17 @@ h1, h2, h3, h4, h5, h6 {
 
 #SkillsLanguages {
   float: left;
-  margin-left: 25vw;
+  margin-left: 32vw;
 }
 
 #SkillsProducts {
-  margin: 0 25vw 0 -30vw;
+  margin-right: 32vw;
+  margin-left: -30vw;
   float: right;
 }
 
 .skills {
-  margin: 0 auto;
+  margin: 1em auto;
 }
 
 
