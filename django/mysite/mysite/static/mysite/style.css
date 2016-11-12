@@ -140,45 +140,57 @@ h1, h2, h3, h4, h5, h6 {
 /* ABOUT SECTION */
 #AboutBanner {
   text-align: center;
-  height: 100vh;
+  background: rgb(100, 100, 115);
 }
 
 #About {
   padding-top: 50px;
+  color: rgb(230,230,235);
+}
+
+#About h4 {
+  color: rgb(30, 50, 145);
 }
 
 #About h3 {
-  border-bottom: 1px solid rgb(216,186,233);
+  border-bottom: 1px solid white;
   padding-bottom: 1em;
   margin: 0 auto;
   width: 60vw;
+  color: rgb(30, 50, 145);
 }
 
 
 
 #AboutHeader {
   width: 100%;
+  color: white;
 }
 
 #AboutHeader p {
   font-size: 36px;
   line-height: 50px;
-  letter-spacing: -0.065em;
+  letter-spacing: -0.055em;
   font-weight: 500;
-  margin: 2em auto 0 auto;
+  margin: 1em auto 3em auto;
 }
 
+
+#AboutQuote {
+  margin: 0 auto;
+  width: 70vw;
+  padding 1em 0;
+  height: 20em;
+}
 
 #AboutContent {
-  margin: 0 auto;
-  width: 70%;
-  height: 25em;
-  padding: 3em 0;
+  margin: 1em auto;
+  width: 50vw;
+  text-align: justify;
 }
 
 
-
-#AboutContent p {
+#AboutQuote p {
   text-align: center;
   font-size: 20px;
   font-weight: 100;
@@ -191,6 +203,8 @@ h1, h2, h3, h4, h5, h6 {
   height: 21em;
   margin: 0 auto;
 }
+
+
 
 #AboutSkills ul {
   list-style: none;
@@ -212,19 +226,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #Connect {
-  height: 10em;
+  height: 20em;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
-  margin-bottom: 5em;
+  padding-bottom: 5em;
 }
 
 
 .connect {
   position: relative;
   margin: 2%;
-  width: 3em;
-  height: 3em;
+  width: 6em;
+  height: 6em;
 }
 .connect img {
   max-width: 100%;
@@ -233,24 +247,24 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s;
 }
 .connect:hover img {
-  -moz-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+  -moz-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 
 
-#connect-social-media {
+#ConnectSocialMedia {
   padding: 0;
   text-align: center;
 }
 
-#connect-social-media ul {
-  padding: 0;
+#ConnectSocialMedia ul {
+  padding: 1em 0 0 0;
   height: 100px;
 }
 
-#connect-social-media li {
+#ConnectSocialMedia li {
   text-align: center;
   list-style: none;
   margin: 1em 3em;
