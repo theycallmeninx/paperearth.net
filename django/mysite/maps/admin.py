@@ -4,15 +4,21 @@ from .models import Zone
 from .models import Photo
 from .models import Sign
 from .models import CityStateCode
-from .models import StreetBlockCoords
+from .models import MapCoordinates
 
 
-class StreetBlockCoordsInline(admin.TabularInline): 
-    model = StreetBlockCoords
+class MapCoordinatesInline(admin.TabularInline): 
+    model = MapCoordinates
+    verbose_name = "Coordinates"
     extra = 1 #blank rows
 
+class ZoneInline(admin.TabularInline):
+    model = StreetBlock.zones.through
+    verbose_name = "Zone"
+    extra = 1
+
 class ZoneAdmin(admin.ModelAdmin):
-    fields = [('fillcolorrgb', 'strokecolorrgb'), 'priority', 'zonetype', 'holiday_bool']
+    fields = [('fillcolorrgb', 'strokecolorrgb'), 'priority', ('label', 'zonetype'), 'holiday_bool']
 
 class SignAdmin(admin.ModelAdmin):
     fields = ['days', 'timestart', 'timeend', 'zone', 'restriction', 'rawtext']
@@ -21,10 +27,8 @@ class CityStateCodeAdmin(admin.ModelAdmin):
     fields = ['city', 'state', 'zipcode']
 
 class StreetBlockAdmin(admin.ModelAdmin):
-    fields = [('addresshigh', 'addresslow'), 'name', 'csc', 'signs']
-    inlines = [StreetBlockCoordsInline]
-
-
+    fields = [('addresshigh', 'addresslow'), 'name', 'csc']
+    inlines = [MapCoordinatesInline, ZoneInline]
 
 class PhotoAdmin(admin.ModelAdmin):
     fields = ['signs', 'rawtext', 'image', 'pub_date','latgps', 'longps']

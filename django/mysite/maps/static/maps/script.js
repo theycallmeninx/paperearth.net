@@ -4,6 +4,8 @@
 var coordsDiv = document.getElementById('MapControls');
 var map;
 
+var zonepolys = [];
+
 var csrftoken = Cookies.get('csrftoken');
 
 function csrfSafeMethod(method) {
@@ -19,40 +21,216 @@ $.ajaxSetup({
     }
 });
 
+
+var mapstyle = [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#bdbdbd"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#ffffff"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dadada"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#c9c9c9"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  }
+];
+
+function makeNewPoly(coords, stroke, fill) {
+  var blockcoords = [];
+  for (var order in coords) {
+    blockcoords.push({  
+      lat: parseFloat(coords[order]['lat']),
+      lng: parseFloat(coords[order]['lng'])
+    });   
+  }
+
+  return new google.maps.Polygon({
+    paths: blockcoords,
+    strokeColor: "rgb("+stroke+")",
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: "rgb("+fill+")",
+    fillOpacity: 0.25
+  });
+}
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 34.089557, lng: -118.358198},
-    zoom: 17,
+    zoom: 18,
     clickableIcons: false,
     zoomControl: false,
     streetViewControl: false,
-    mapTypeControl: false
+    mapTypeControl: false,
+    styles: mapstyle
   });
   
-  map.addListener('dragend', function() {
+  google.maps.event.addListenerOnce(map, 'idle', function(){
+    var postdata = map.getBounds().toJSON();
+    postdata['date'] = Date.now();
     $.ajax({
       type:"POST",
-      url:"./test/",
-      data: map.getBounds().toJSON(),
+      url:"./start/",
+      data: postdata,
       success: function(response){
-        for (var block in response) {
-          var blockcoords = [];
-          var street = response[block];
-          for (var coords in street) {
-            blockcoords.push({ 
-              lat: parseFloat(street[coords]['lat']),
-              lng: parseFloat(street[coords]['lng'])
-            }); 
+
+        for (var zoneid in response) {
+          var blockid = response[zoneid];
+          var data = response[zoneid]['d'];
+          var coords = response[zoneid]['c'];
+          for (var set in coords) {
+            var poly = makeNewPoly(coords[set], data['s'], data['f']);
+            zonepolys.push(poly);
+            poly.setMap(map);  
           }
-          var zone = new google.maps.Polygon({
-            paths: blockcoords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.25
-          });
-          zone.setMap(map);
         }
       }
     });
