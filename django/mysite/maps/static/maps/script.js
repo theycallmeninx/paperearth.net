@@ -1,9 +1,9 @@
 /*jslint node: true */
 "use strict";
 
-var coordsDiv = document.getElementById('MapControls');
-var map;
 
+var map;
+var autocomplete;
 var zonepolys = [];
 
 var csrftoken = Cookies.get('csrftoken');
@@ -20,6 +20,10 @@ $.ajaxSetup({
         }
     }
 });
+
+
+document.getElementById('datefield').valueAsDate = new Date();
+
 
 
 var mapstyle = [
@@ -198,21 +202,54 @@ function makeNewPoly(coords, stroke, fill) {
     strokeOpacity: 0.8,
     strokeWeight: 2,
     fillColor: "rgb("+fill+")",
-    fillOpacity: 0.25
+    fillOpacity: 0.85
   });
 }
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 34.089557, lng: -118.358198},
-    zoom: 18,
+    zoom: 19,
     clickableIcons: false,
     zoomControl: false,
     streetViewControl: false,
     mapTypeControl: false,
-    styles: mapstyle
+    styles: mapstyle,
+    scaleControl: true,
   });
+
+  autocomplete = new google.maps.places.Autocomplete(
+      /** @type {!HTMLInputElement} */(document.getElementById('autoaddress')),
+      {types: ['geocode']});
   
+  var iconBase = 'http://maps.google.com/mapfiles/kml/pal4/';
+  var signsicons = {
+    caution: {
+      icon: iconBase + 'icon62.png'
+    },
+    good: {
+      icon: iconBase + 'icon31.png'
+    },
+    bad: {
+      icon: iconBase + 'icon15.png'
+    }
+  };
+
+  function addMarker(feature) {
+    var marker = new google.maps.Marker({
+      position: feature.position,
+      icon: signsicons[feature.type].icon,
+      map: map,
+      title: feature.title
+    });
+    var infowindow = new google.maps.InfoWindow({
+      content: '<img style="height:250px;" src="'+feature.img+'">'
+    });
+      marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+
   google.maps.event.addListenerOnce(map, 'idle', function(){
     var postdata = map.getBounds().toJSON();
     postdata['date'] = Date.now();
@@ -226,6 +263,18 @@ function initMap() {
           var blockid = response[zoneid];
           var data = response[zoneid]['d'];
           var coords = response[zoneid]['c'];
+          var signs = response[zoneid]['s'];
+          for (var sign in signs) {
+            //todo: find a way to stack the images?
+            var c = signs[sign]['c']
+            var f = {
+              position: new google.maps.LatLng(c['lat'],c['lng']),
+              type: 'caution',
+              img: signs[sign]['i'],
+              title: signs[sign]['r']
+            }; 
+            addMarker(f);
+          }
           for (var set in coords) {
             var poly = makeNewPoly(coords[set], data['s'], data['f']);
             zonepolys.push(poly);
@@ -236,7 +285,7 @@ function initMap() {
     });
   });
 
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(coordsDiv);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('AddressBar'));
+  map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('MapControls'));
 
 };
-

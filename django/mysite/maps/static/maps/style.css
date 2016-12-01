@@ -3,7 +3,85 @@
 }
 
 #MapControls {
-  background-color: black;
+  background-color: rgba(100,100,100,0);
   color: white;
-  padding: 5px;
+  padding: 0.5em 1em;
+  margin: 0 auto;
+  color: black;
+  text-align: left;
+  font-size: large;
+  width: 98vw;
+}
+
+#MapControls label {
+  font-weight: 700;
+}
+
+#MapControls input {
+  line-height: 1.5em;
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+#AddressBar {
+  text-align: left;
+  padding: 2em 0 0 2em;
+
+}
+
+#AddressBar label {
+  font-weight: 700;
+}
+
+#AddressBar input {
+  font-weight: 700;
+  line-height: 3em;
+  width: 15vw;
+  margin: 0.5em 0;
+  border: none;
+  box-shadow: 0 2px 2px rgba(100, 100, 100, 0.5);
+  padding-left: 1em;
+}
+
+*:focus {
+  outline: none;
+}
+
+#DateTime {
+  height: 5vh;
+  margin-bottom: 2em;
+}
+
+#Date {
+  width: 15vw;
+}
+
+#Date input {
+  font-size: inherit;
+  font-family: inherit;
+  text-align: center;
+}
+
+#Time {
+  background: white;
+
+}
+
+#Time input {
+  color: black;
+  padding: 1em 0;
+}
+
+::-webkit-inner-spin-button { 
+  display: none; 
+}
+
+::-webkit-calendar-picker-indicator { 
+  display: none; 
+}
+
+::-webkit-datetime-edit-text { 
+  font-family: Arial;
+  font-size: 24px;
+  padding: 0 0.3em; 
 }

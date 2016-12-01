@@ -7,6 +7,8 @@ from django.db.models import Count
 from .models import MapCoordinates
 from .models import StreetBlock
 from .models import Zone
+from .models import Sign
+from .models import Photo
 
 from decimal import *
 
@@ -14,12 +16,30 @@ import datetime
 import time
 import math
 
-
-getcontext().prec = 6
+"""
+todo:
+1) based on location, determine address and then determine street block
+2) 
+"""
 
 class MapsResponse:
     def __init__(self):
         self.zones = {} #this is what I ultimately need.
+
+
+    def addSignToZone(self, sign, coords):
+
+        zoneid = sign.zone_id
+        if not self.zones.get(zoneid, None):
+            self.addZone(sign.zone)
+
+        coords = list(coords)[0]
+        imgpath = sign.photo.image.url
+        tempdict = {'i': imgpath,
+                    'r': sign.restriction,
+                    'c': coords.as_set()
+                    }
+        self.zones[zoneid]['s'].append(tempdict)
 
     def addBlockToZone(self, zone, coords):
         if not self.zones.get(zone.id, None):
@@ -50,18 +70,19 @@ class MapsResponse:
                 'f': zone.fillcolorrgb,
                 'p': zone.priority
                 }
-        self.zones[zone.id] = {'c':[], 'd':data}
+        self.zones[zone.id] = {'c':[], 'd':data, 's':[]}
 
     def calculateNormal(self, c1, c2):
-        print c1, c2
+
         getcontext().prec = 9
         dy = Decimal(c2['lng']) - Decimal(c1['lng'])
         dx = Decimal(c2['lat']) - Decimal(c1['lat'])
         magnitude = math.sqrt((dx*dx) + (dy*dy))
         scalar = Decimal(magnitude / 0.000150)
-        return {'lat': c1['lat']-(dy/scalar), 'lng': c1['lng']+(dx/scalar)}
+        return {'lat': c1['lat']+(dy/scalar), 'lng': c1['lng']-(dx/scalar)}
 
     def as_dict(self):
+        getcontext().prec = 9
         return self.zones
 
 
@@ -86,11 +107,12 @@ def generateMapCoordinates(north, south, east, west):
 
 def InitMap(request):
     response = MapsResponse()
-
-    date = float(request.POST['date'])
-    mtime = time.strftime("%H%M", time.localtime(date))
-    day = time.strftime("%A", time.localtime(date))
-
+    getcontext().prec = 9
+    date = float(request.POST['date'][:-3])
+    hour = time.strftime("%H%M", time.localtime(date))
+    days = [time.strftime("%A", time.localtime(date)),
+            time.strftime("%A", time.localtime(date+86400))] #24 hours
+    
     north = Decimal(request.POST['north'])
     south = Decimal(request.POST['south'])
     east = Decimal(request.POST['east'])
@@ -98,27 +120,16 @@ def InitMap(request):
 
     mapsqueryset = generateMapCoordinates(north, south, east, west)
 
-    mapcoords = mapsqueryset.exclude(sb_id=None).values('sb_id').annotate(n=Count("pk"))
-    blockids = [c['sb_id'] for c in mapcoords]
-    blocks = StreetBlock.objects.filter(id__in=blockids)
+    signset = mapsqueryset.exclude(sign_id=None)
+    signids = [c['sign_id'] for c in signset.values('sign_id').annotate(n=Count("pk"))]
+    signs = Sign.objects.filter(id__in=signids)
 
-    for block in blocks:
-        coords = MapCoordinates.objects.filter(sb_id=block.id)
-        for zone in block.zones.all():
-            response.addBlockToZone(zone, coords)
+    for sign in signs:
+        if sign.applies(days, hour):
+            zc = MapCoordinates.objects.filter(zone_id=sign.zone_id)
+            sc = MapCoordinates.objects.filter(sign_id=sign.id)
+            response.addBlockToZone(sign.zone, zc)        
+            response.addSignToZone(sign, sc)
 
-    # response.addZoneCoordinates(myzone, coords)
-    # coords = MapCoordinates.objects.filter(zone_id=zone['zone_id'])
-
-    # for street in streets:
-    #     pk = street.sb.pk
-    #     signs = street.sb.signs.filter(days__contains=[day.lower()]).filter(
-    #                                     timestart__lte=int(mtime)).filter(
-    #                                     timeend__gte=int(mtime))
-    #     for sign in signs:
-    #         if tempid is None or tempid != pk:
-    #             tempid = pk
-    #             response.addZone(sign.zone, pk) #label
-    #     response.addStreet(pk, street)
     print response.as_dict()
     return JsonResponse(response.as_dict())

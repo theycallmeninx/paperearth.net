@@ -23,6 +23,15 @@ class Zone(models.Model):
     def __str__(self):
         return "%s" %(self.zonetype if self else "None")
 
+class Photo(models.Model):
+    rawtext = models.CharField(max_length=200, null=True)
+    image = models.ImageField(upload_to="maps/photos/signs", null=False)
+    pub_date = models.DateTimeField('date taken')
+    description = "Photo Upload Model"
+
+    def __str__(self):
+        return self.image.name
+
 class Sign(models.Model):
     days = ArrayField(models.CharField(max_length=10, blank=False, null=False, default="everyday"), size=7)
     timestart = models.PositiveSmallIntegerField("Time Start", null=True)
@@ -30,7 +39,15 @@ class Sign(models.Model):
     zone = models.ForeignKey(Zone, on_delete=models.SET_NULL, null=True)
     restriction =  models.CharField(max_length=200, null=False, default="No")
     rawtext = models.CharField(max_length=200, null=False, blank=True, default="")
-    
+    photo = models.ForeignKey(Photo, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def applies(self, days, hour):
+        for day in days:
+            if day.lower() in self.days:
+                print "Day:", day
+                return True
+        return False
+
 
     def __str__(self):
         return "%s (%s)." %(self.zone.zonetype if self.zone else "", 
@@ -39,9 +56,9 @@ class Sign(models.Model):
 class StreetBlock(models.Model):
     addresshigh = models.CharField("High", max_length=10, null=False, default="0")
     addresslow = models.CharField("Low", max_length=10, null=False, default="0")
+    side = models.CharField("Zone Side", max_length=30, null=True)
     name = models.CharField(max_length=200, null=False, default="main")
     signs = models.ManyToManyField(Sign)
-    zones = models.ManyToManyField(Zone)
     csc = models.ForeignKey(CityStateCode, verbose_name="City, State, Zip Code", on_delete=models.SET_NULL, null=True)
     odd_bool = models.BooleanField("Odd #", null=False, default=False)
 
@@ -49,9 +66,12 @@ class StreetBlock(models.Model):
         return "%s-%s %s, %s, %s(%s)" %(self.addresshigh, self.addresslow, self.name,
                             self.csc.city, self.csc.state, self.csc.zipcode)
 
-
 class MapCoordinates(models.Model):
-    sb = models.ForeignKey(StreetBlock, on_delete=models.CASCADE, blank=True, null=True)
+    ## This can be a lot better. =/
+    ## if its a zone, why not store the normal of coordinate relative to its order
+    sign = models.ForeignKey(Sign, on_delete=models.CASCADE, blank=True, null=True)
+    zone = models.ForeignKey(Zone, on_delete=models.CASCADE, blank=True, null=True)
+    block = models.ForeignKey(StreetBlock, on_delete=models.CASCADE, blank=True, null=True)
     lat = models.DecimalField("Latitude", max_digits=10, decimal_places=6, default=0.0, null=False)
     lng = models.DecimalField("Longitude", max_digits=10, decimal_places=6, default=0.0, null=False)
     order = models.PositiveSmallIntegerField(null=False, default=0)
@@ -61,18 +81,3 @@ class MapCoordinates(models.Model):
 
     def __str__(self):
         return "#%s" %self.order
-
-
-class Photo(models.Model):
-    signs = models.ManyToManyField(Sign)
-    latgps = models.DecimalField("Latitiude", max_digits=20, decimal_places=14, default=0.0, null=False)
-    longps = models.DecimalField("Longitude", max_digits=20, decimal_places=14, default=0.0, null=False)
-    rawtext = models.CharField(max_length=200, null=True)
-    image = models.ImageField(upload_to="uploads/photos/maps/", null=False)
-    pub_date = models.DateTimeField('date taken')
-    description = "Photo Upload Model"
-
-    def __str__(self):
-        return self.image.name
-
-
