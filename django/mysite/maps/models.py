@@ -20,6 +20,13 @@ class Zone(models.Model):
     label = models.CharField(max_length=200, null=True)
     holiday_bool = models.BooleanField("Holiday Exempt", null=False, default=False)
 
+    def json(self):
+        data = {'s': self.strokecolorrgb,
+                'f': self.fillcolorrgb,
+                'p': self.priority
+                }
+        return {self.pk: {'c':[], 'd':data}}
+
     def __str__(self):
         return "%s" %(self.zonetype if self else "None")
 

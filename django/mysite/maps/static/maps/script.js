@@ -2,9 +2,12 @@
 "use strict";
 
 
-var map;
-var autocomplete;
-var zonepolys = [];
+var DATE = new Date();
+var GOOGLEMAP;
+var AUTOCOMPLETE;
+
+var zonepolys = {active: { visible:[], hidden:[] }, todelete:[]};
+var HOURMIN = parseInt(DATE.getHours().toString() + DATE.getMinutes().toString());
 
 var csrftoken = Cookies.get('csrftoken');
 
@@ -22,8 +25,83 @@ $.ajaxSetup({
 });
 
 
-document.getElementById('datefield').valueAsDate = new Date();
+function isSignVisible(hour, start, end) {
+  //console.log(hour+":"+start+":"+end);
+  if (start < end) {
+    if (hour >= start && hour <= end){
+      return true;
+    }
+  } else if (end < start) {
+    if (hour >= start || hour <= end){
+      return true;
+    }
+  }
+  return false;
+}
 
+
+document.getElementById('datefield').valueAsDate = DATE;
+
+var timeslider = document.getElementById("timeslider");
+timeslider.onchange = function() {
+  
+  var hourtime = HOURMIN + (this.value*100);
+  hourtime = hourtime > 2400 ? hourtime-2400 : hourtime;
+  
+  var toshow = [];
+  var tohide = [];
+  console.log(hourtime);
+  var poly;
+
+  for (var index in zonepolys.active.visible) {
+    poly = zonepolys.active.visible[index];
+    if (!isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
+      tohide.push(poly);
+      poly.sign.marker.setVisible(false);
+      for (var zone in poly.zones) {
+        poly.zones[zone].setVisible(false);
+        // console.log(zone);
+      }
+    }
+  }
+
+  for (var index in zonepolys.active.hidden) {
+    poly = zonepolys.active.hidden[index];
+    if (isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
+      toshow.push(poly);      
+      poly.sign.marker.setVisible(true);
+      for (var zone in poly.zones) {
+        poly.zones[zone].setVisible(true);
+        // console.log(zone);
+      }
+    }
+  }
+
+/*  console.log("Show: "+toshow);
+  console.log("Hide: "+tohide);*/
+
+  //  console.log("Visible: "+zonepolys.active.visible);
+  // console.log("Hidden: "+zonepolys.active.hidden);
+
+  var keepvisible = [];
+  if (zonepolys.active.visible.length > 0) {
+    keepvisible = zonepolys.active.visible.filter( function (sign)
+    {
+      return (isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
+    });
+  }
+
+  var keephidden = [];
+  if (zonepolys.active.hidden.length > 0) {
+    keephidden = zonepolys.active.hidden.filter( function (sign)
+    {
+      return !(isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
+    });
+  }
+
+  zonepolys.active = {visible: keepvisible.concat(toshow), hidden: keephidden.concat(tohide)};
+  console.log(zonepolys);
+}
 
 
 var mapstyle = [
@@ -187,7 +265,7 @@ var mapstyle = [
   }
 ];
 
-function makeNewPoly(coords, stroke, fill) {
+function makeNewPoly(coords, stroke, fill, vis) {
   var blockcoords = [];
   for (var order in coords) {
     blockcoords.push({  
@@ -202,12 +280,17 @@ function makeNewPoly(coords, stroke, fill) {
     strokeOpacity: 0.8,
     strokeWeight: 2,
     fillColor: "rgb("+fill+")",
-    fillOpacity: 0.85
+    fillOpacity: 0.85, 
+    visible: vis
   });
 }
 
+
+
+
+
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
+    GOOGLEMAP = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 34.089557, lng: -118.358198},
     zoom: 19,
     clickableIcons: false,
@@ -218,40 +301,51 @@ function initMap() {
     scaleControl: true,
   });
 
-  autocomplete = new google.maps.places.Autocomplete(
-      /** @type {!HTMLInputElement} */(document.getElementById('autoaddress')),
-      {types: ['geocode']});
+  AUTOCOMPLETE = new google.maps.places.Autocomplete(
+      (document.getElementById('autoaddress')),
+      {types: ['geocode']}
+  );
   
   var iconBase = 'http://maps.google.com/mapfiles/kml/pal4/';
   var signsicons = {
     caution: {
-      icon: iconBase + 'icon62.png'
+      icon: iconBase + 'icon31.png'
     },
     good: {
-      icon: iconBase + 'icon31.png'
+      icon: iconBase + 'icon62.png'
     },
     bad: {
       icon: iconBase + 'icon15.png'
     }
   };
 
-  function addMarker(feature) {
+  function addMarker(origin, imgurl, title, visible) {
+    var feature = {
+      position: new google.maps.LatLng(origin['lat'],origin['lng']),
+      type: 'caution',
+      img: imgurl,
+      title: title,
+      vis: visible
+    }; 
+
     var marker = new google.maps.Marker({
       position: feature.position,
       icon: signsicons[feature.type].icon,
-      map: map,
-      title: feature.title
+      map: GOOGLEMAP,
+      title: feature.title,
+      visible: feature.vis
     });
     var infowindow = new google.maps.InfoWindow({
       content: '<img style="height:250px;" src="'+feature.img+'">'
     });
       marker.addListener('click', function() {
-      infowindow.open(map, marker);
+      infowindow.open(GOOGLEMAP, marker);
     });
+    return marker;
   }
 
-  google.maps.event.addListenerOnce(map, 'idle', function(){
-    var postdata = map.getBounds().toJSON();
+  google.maps.event.addListenerOnce(GOOGLEMAP, 'idle', function(){
+    var postdata = GOOGLEMAP.getBounds().toJSON();
     postdata['date'] = Date.now();
     $.ajax({
       type:"POST",
@@ -259,33 +353,33 @@ function initMap() {
       data: postdata,
       success: function(response){
 
-        for (var zoneid in response) {
-          var blockid = response[zoneid];
-          var data = response[zoneid]['d'];
-          var coords = response[zoneid]['c'];
-          var signs = response[zoneid]['s'];
-          for (var sign in signs) {
-            //todo: find a way to stack the images?
-            var c = signs[sign]['c']
-            var f = {
-              position: new google.maps.LatLng(c['lat'],c['lng']),
-              type: 'caution',
-              img: signs[sign]['i'],
-              title: signs[sign]['r']
-            }; 
-            addMarker(f);
+        for (var signid in response) {
+          var sign = response[signid];
+          var zones = sign['z'];
+
+          var visible = isSignVisible(HOURMIN, parseInt(sign['s']), parseInt(sign['e']));
+          var signMarker = addMarker(sign['c'], sign['i'], sign['r'], visible);
+
+          var tempzones = [];
+          for (var zone in zones) {
+            var d = zones[zone]['d'];
+            var poly = makeNewPoly(zones[zone]['c'], d['s'], d['f'], visible);
+            tempzones.push(poly);
+            poly.setMap(GOOGLEMAP); 
           }
-          for (var set in coords) {
-            var poly = makeNewPoly(coords[set], data['s'], data['f']);
-            zonepolys.push(poly);
-            poly.setMap(map);  
+          var tempsign = {'sign': {'marker': signMarker, 'json':sign}, 'zones': tempzones};
+          if (visible) {
+            zonepolys.active.visible.push(tempsign);
+          }
+          else {
+            zonepolys.active.hidden.push(tempsign);
           }
         }
       }
     });
   });
 
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('AddressBar'));
-  map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('MapControls'));
+  GOOGLEMAP.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('AddressBar'));
+  GOOGLEMAP.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('MapControls'));
 
 };

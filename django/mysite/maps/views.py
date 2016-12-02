@@ -24,29 +24,25 @@ todo:
 
 class MapsResponse:
     def __init__(self):
-        self.zones = {} #this is what I ultimately need.
+        self.signs = {} #this is what I ultimately need.
 
-
-    def addSignToZone(self, sign, coords):
-
-        zoneid = sign.zone_id
-        if not self.zones.get(zoneid, None):
-            self.addZone(sign.zone)
-
-        coords = list(coords)[0]
+    def addSign(self, sign, sc, zc):
+        coords = list(sc)[0]
         imgpath = sign.photo.image.url
         tempdict = {'i': imgpath,
                     'r': sign.restriction,
-                    'c': coords.as_set()
+                    'c': coords.as_set(),
+                    's': sign.timestart,
+                    'e': sign.timeend,
+                    'z': sign.zone.json()
                     }
-        self.zones[zoneid]['s'].append(tempdict)
+        tempdict['z'][sign.zone_id]['c'] = self.formatZoneCoordinates(zc)
+        self.signs[sign.id] = tempdict
 
-    def addBlockToZone(self, zone, coords):
-        if not self.zones.get(zone.id, None):
-            self.addZone(zone)
 
+    def formatZoneCoordinates(self, zc):
         tempdict = {}
-        coords = list(coords)
+        coords = list(zc)
         dlength = len(coords)*2-1
         for i in range(len(coords)):
             c = coords[i].as_set()
@@ -57,23 +53,11 @@ class MapsResponse:
                               }
             else:
                 tempcoords = coords[i+1].as_set()
-
             tempdict[i] = c
             tempdict[dlength-i] = self.calculateNormal(c, tempcoords)
-
-        if tempdict:
-            self.zones[zone.id]['c'].append(tempdict)
-
-
-    def addZone(self, zone):
-        data = {'s': zone.strokecolorrgb,
-                'f': zone.fillcolorrgb,
-                'p': zone.priority
-                }
-        self.zones[zone.id] = {'c':[], 'd':data, 's':[]}
+        return tempdict
 
     def calculateNormal(self, c1, c2):
-
         getcontext().prec = 9
         dy = Decimal(c2['lng']) - Decimal(c1['lng'])
         dx = Decimal(c2['lat']) - Decimal(c1['lat'])
@@ -83,7 +67,7 @@ class MapsResponse:
 
     def as_dict(self):
         getcontext().prec = 9
-        return self.zones
+        return self.signs
 
 
 
@@ -128,8 +112,7 @@ def InitMap(request):
         if sign.applies(days, hour):
             zc = MapCoordinates.objects.filter(zone_id=sign.zone_id)
             sc = MapCoordinates.objects.filter(sign_id=sign.id)
-            response.addBlockToZone(sign.zone, zc)        
-            response.addSignToZone(sign, sc)
+            response.addSign(sign, sc, zc)
 
-    print response.as_dict()
+    #print response.as_dict()
     return JsonResponse(response.as_dict())
