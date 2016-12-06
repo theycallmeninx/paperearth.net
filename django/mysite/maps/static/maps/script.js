@@ -39,71 +39,6 @@ function isSignVisible(hour, start, end) {
   return false;
 }
 
-
-
-
-var timeslider = document.getElementById("timeslider");
-timeslider.oninput = function() {
-  
-  var hourtime = HOURMIN + (this.value*100);
-  hourtime = hourtime > 2400 ? hourtime-2400 : hourtime;
-  
-  var toshow = [];
-  var tohide = [];
-  // console.log(hourtime);
-  var poly;
-
-  for (var index in zonepolys.active.visible) {
-    poly = zonepolys.active.visible[index];
-    if (!isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
-      tohide.push(poly);
-      poly.sign.marker.setVisible(false);
-      for (var zone in poly.zones) {
-        poly.zones[zone].setVisible(false);
-        // console.log(zone);
-      }
-    }
-  }
-
-  for (var index in zonepolys.active.hidden) {
-    poly = zonepolys.active.hidden[index];
-    if (isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
-      toshow.push(poly);      
-      poly.sign.marker.setVisible(true);
-      for (var zone in poly.zones) {
-        poly.zones[zone].setVisible(true);
-        // console.log(zone);
-      }
-    }
-  }
-
-/*  console.log("Show: "+toshow);
-  console.log("Hide: "+tohide);*/
-
-  //  console.log("Visible: "+zonepolys.active.visible);
-  // console.log("Hidden: "+zonepolys.active.hidden);
-
-  var keepvisible = [];
-  if (zonepolys.active.visible.length > 0) {
-    keepvisible = zonepolys.active.visible.filter( function (sign)
-    {
-      return (isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
-    });
-  }
-
-  var keephidden = [];
-  if (zonepolys.active.hidden.length > 0) {
-    keephidden = zonepolys.active.hidden.filter( function (sign)
-    {
-      return !(isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
-    });
-  }
-
-  zonepolys.active = {visible: keepvisible.concat(toshow), hidden: keephidden.concat(tohide)};
-  // console.log(zonepolys);
-}
-
-
 var mapstyle = [
   {
     "elementType": "geometry",
@@ -285,10 +220,6 @@ function makeNewPoly(coords, stroke, fill, vis) {
   });
 }
 
-
-
-
-
 function toggleAddSign() {
   $('#MapContainer').slideToggle("slow");
   $('#AddSignContainer').slideToggle("slow");
@@ -298,7 +229,69 @@ function toggleAddSign() {
 
 window.onload = function() {
 
+  var timeslider = document.getElementById("timeslider");
+  timeslider.oninput = function() {
+    var hourtime = HOURMIN + (this.value*100);
+    hourtime = hourtime > 2400 ? hourtime-2400 : hourtime;
+    
+    var toshow = [];
+    var tohide = [];
+    // console.log(hourtime);
+    var poly;
+
+    for (var index in zonepolys.active.visible) {
+      poly = zonepolys.active.visible[index];
+      if (!isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
+        tohide.push(poly);
+        poly.sign.marker.setVisible(false);
+        for (var zone in poly.zones) {
+          poly.zones[zone].setVisible(false);
+          // console.log(zone);
+        }
+      }
+    }
+
+    for (var index in zonepolys.active.hidden) {
+      poly = zonepolys.active.hidden[index];
+      if (isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
+        toshow.push(poly);      
+        poly.sign.marker.setVisible(true);
+        for (var zone in poly.zones) {
+          poly.zones[zone].setVisible(true);
+          // console.log(zone);
+        }
+      }
+    }
+
+    var keepvisible = [];
+    if (zonepolys.active.visible.length > 0) {
+      keepvisible = zonepolys.active.visible.filter( function (sign)
+      {
+        return (isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
+      });
+    }
+
+    var keephidden = [];
+    if (zonepolys.active.hidden.length > 0) {
+      keephidden = zonepolys.active.hidden.filter( function (sign)
+      {
+        return !(isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
+      });
+    }
+
+    zonepolys.active = {visible: keepvisible.concat(toshow), hidden: keephidden.concat(tohide)};
+  }
+
   document.getElementById('datefield').valueAsDate = DATE;
+
+  $('.clockpicker').clockpicker({
+    placement: 'bottom',
+    align: 'right'
+  });
+
+  $("#permit_b").click(function(){   
+      $("#permitname").attr('disabled', !this.checked)
+  });
 
   $('#NewSignForm').submit(function(e) {
     $.post("./new/", $(this).serialize(), function(response) {
@@ -401,7 +394,7 @@ function initMap() {
   });
 
   GOOGLEMAP.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('AddressBar'));
-  GOOGLEMAP.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('MapControls'));
+  GOOGLEMAP.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('DateTimeBar'));
   GOOGLEMAP.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('AddSign'));
 
 };

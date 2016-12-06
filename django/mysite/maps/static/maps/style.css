@@ -3,26 +3,7 @@
   z-index: 1;
 }
 
-#MapControls {
-  background-color: rgba(100,100,100,0);
-  color: white;
-  padding: 0.5em 1em;
-  margin: 0 auto;
-  color: black;
-  text-align: left;
-  font-size: large;
-  width: 98vw;
-}
 
-#MapControls label {
-  font-weight: 700;
-}
-
-#MapControls input {
-  line-height: 1.5em;
-  width: 100%;
-  margin: 0.5em 0;
-}
 
 #AddressBar {
   text-align: left;
@@ -55,29 +36,42 @@
   outline: none;
 }
 
-#DateTime {
-  height: 5vh;
-  margin-bottom: 2em;
+#DateTimeBar {
+  background-color: rgba(100,100,100,0);
+  padding: 0.5em 1em;
+  margin-bottom: 7vh;
+  text-align: left;
+  font-size: large;
+  width: 100%;
+  height: 7vh;
 }
 
-#Date {
+#DateTimeBar label {
+  font-weight: 700;
+}
+
+#DateTimeBar input {
+  line-height: 1.5em;
+}
+
+#DateBar {
   width: 15vw;
 }
 
-#Date input {
+#DateBar input {
   font-size: inherit;
   font-family: inherit;
   text-align: center;
 }
 
-#Time {
+#TimeSliderBar {
   background: white;
 
 }
 
-#Time input {
-  color: black;
-  padding: 1em 0;
+#TimeSliderBar input {
+  padding: 0.5em;
+  width: 97vw;
 }
 
 #AddSignContainer {
@@ -101,11 +95,91 @@
 #SignDateTime {
   padding-top: 2em;
   height: 70vh;
+  text-align: center;
+  margin: 0 auto;
 }
 
-#SignDateTime input{
-  margin: 0.5em;
+#Week {
+  padding-top: 2em;
+  width: 600px;
+  height: 200px;
+  margin: 0 auto;
+  text-align: right;
 }
+
+#Week input{
+  width: 3em;
+}
+
+#Weekends {
+  float: left;
+  width: 175px;
+  margin-left: 10%;
+}
+
+#Weekdays {
+  float: right;
+  width: 175px;
+  margin-right: 15%;
+}
+
+
+#TimeBanner {
+  padding-top: 2em;
+  width: 600px;
+  height: 10vh;
+  margin: 0 auto;
+}
+
+#TimeBanner input{
+  width: 10em;
+}
+
+#TimeBannerLeft {
+  float: left;
+  width: 200px;
+  margin-left: 10%;
+}
+
+#TimeBannerRight {
+  float: right;
+  width: 200px;
+  margin-right: 10%;
+}
+
+#AdditionalsBanner {
+  padding-top: 2em;
+  width: 800px;
+  height: 200px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+#AdditionalsBanner label{
+  padding: 0.5em;
+  padding-bottom: 1em;
+}
+
+#AdditionalsBanner input{
+  padding: 0.5em;
+  margin-top: 0.3em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+#Restrictions {
+  float: left;
+  width: 200;
+  margin-left: 10%;
+}
+
+
+#SignOptions {
+  float: right;
+  width: 200px;
+  margin-right: 15%;
+}
+
 
 .newsignbutton {
   width: 40vw;

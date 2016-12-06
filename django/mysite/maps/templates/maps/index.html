@@ -7,6 +7,8 @@
     <title>Django Polls Web App</title>
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'maps/clockpicker/dist/bootstrap-clockpicker.min.css' %}">    
+    <link rel="stylesheet" type="text/css" href="{% static 'maps/clockpicker/assets/css/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'maps/style.css' %}" />
   </head>
   <body>
@@ -34,15 +36,13 @@
             <div id="AddSign">
               <label><img id="AddSignIconButton" onclick="toggleAddSign();" class="toggleaddsign" alt="Add Sign" src="{% static 'images/addsign.png' %}"></label>
             </div>
-            <div id="MapControls">
-              <div id="DateTime">
-                <div id="Date">
-                  <label><input type="date" name="date" id="datefield"></label>
-                </div>
-                <div id="Time">
-                  <label><input type="range" id="timeslider" name="Hours" min="0" max="24" step="1" value="0">
-                  </label>
-                </div>
+            <div id="DateTimeBar">
+              <div id="DateBar">
+                <label><input type="date" name="date" id="datefield"></label>
+              </div>
+              <div id="TimeSliderBar">
+                <label><input type="range" id="timeslider" name="Hours" min="0" max="24" step="1" value="0">
+                </label>
               </div>
             </div>
           </div>
@@ -52,24 +52,49 @@
           <h3>New Sign</h3>
             <form action="" id="NewSignForm" method="post">
             <div id="SignDateTime">
-              <label>Su<input name="week" id="su_b" type="checkbox"></label>
-              <label>Mo<input name="week" id="mo_b" type="checkbox"></label>
-              <label>Tu<input name="week" id="tu_b" type="checkbox"></label>
-              <label>We<input name="week" id="we_b" type="checkbox"></label>
-              <label>Th<input name="week" id="th_b" type="checkbox"></label>
-              <label>Fr<input name="week" id="fr_b" type="checkbox"></label>
-              <label>Sa<input name="week" id="sa_b" type="checkbox"></label>
-              <br>
-              <label>Time Start<input name="timestart" type="text"></label>
-              <label>Time End<input name="timeend" type="text"></label>
-              <br>
-              <br><label>Time Limit</label><input name="timelimit" type="text">
-              <br><label>Metered<input name="metered" id="metered_b" type="checkbox"></label>
-              <br><label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>
-              <br><label>Permit Exempt<input name="permit" id="permit_b" type="checkbox"></label> 
-              <label>Permit Name</label><input name="permitname" type="text">
-              <br><label>Commercial Only<input name="commericial" id="commercial_b" type="checkbox"></label> 
-              <br>
+              <div id="Week">
+                <div id="Weekends">
+                  <label>Sunday<input name="week" id="su_b" type="checkbox"></label>
+                  <br><label>Saturday<input name="week" id="sa_b" type="checkbox"></label>
+                  <br>
+                </div>
+                <div id="Weekdays">
+                  <label>Monday<input name="week" id="mo_b" type="checkbox"></label>
+                  <br><label>Tuesday<input name="week" id="tu_b" type="checkbox"></label>
+                  <br><label>Wednesday<input name="week" id="we_b" type="checkbox"></label>
+                  <br><label>Thursday<input name="week" id="th_b" type="checkbox"></label>
+                  <br><label>Friday<input name="week" id="fr_b" type="checkbox"></label>
+                  <br>
+                </div>
+              </div>
+              <div id="TimeBanner">
+                <div id="TimeBannerLeft">
+                  <label>Start</label>
+                  <div style="margin:0 auto;" class="input-group clockpicker" data-autoclose="true" >
+                    <input name="timestart" type="text" class="form-control" placeholder="09:00">
+                  </div>
+                </div>
+                <div id="TimeBannerRight">
+                  <label>End</label>
+                  <div style="margin:0 auto;" class="input-group clockpicker" data-autoclose="true">
+                    <input name="timeend" type="text" class="form-control" placeholder="17:00">
+                  </div>
+                </div>
+              </div>
+              <div id="AdditionalsBanner">
+                <div id="Restrictions">
+                  <br><label>Time Limit<input name="timelimit" type="text"></label>
+                  <br><label>Permit Exempt<input name="permit" id="permit_b" type="checkbox"> 
+                  <input name="permitname" type="text" id="permitname" placeholder="Permit Name/ID" disabled></label>
+                  <br>
+                </div>
+                <div id="SignOptions">
+                  <br><label>Metered<input name="metered" id="metered_b" type="checkbox"></label>
+                  <br><label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>             
+                  <br><label>Commercial Only<input name="commericial" id="commercial_b" type="checkbox"></label>
+                  <br>
+                </div>
+              </div>
             </div>
             <div id="NewSignButtons">
               <input class="newsignbutton" type="button" value="Cancel" onclick="toggleAddSign()">
@@ -85,6 +110,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.js"></script> 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPEppO0U-4BDO3BBXlXtA9h8Uk0kJL6_s&libraries=places&callback=initMap" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'maps/clockpicker/dist/bootstrap-clockpicker.min.js' %}"></script>
     <script src="{% static 'maps/script.js' %}" ></script>
   </body>
 </html>
