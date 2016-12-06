@@ -88,6 +88,15 @@ def generateMapCoordinates(north, south, east, west):
                 lng__gte=west
             )
 
+def NewSign(request):
+    """ Generates a new sign json object to be queued for processing. 
+    """
+    response = {'success': True, 'message': "default success message"}
+
+    print request.POST.items()
+    time.sleep(3)
+
+    return JsonResponse(response)
 
 def InitMap(request):
     response = MapsResponse()

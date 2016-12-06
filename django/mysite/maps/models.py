@@ -18,7 +18,7 @@ class Zone(models.Model):
     strokecolorrgb = models.CharField("Stroke Color (rgb)", max_length=200, validators=[validate_comma_separated_integer_list], null=False, default="0,255,255")
     zonetype = models.CharField("zone type", max_length=200, null=True)
     label = models.CharField(max_length=200, null=True)
-    holiday_bool = models.BooleanField("Holiday Exempt", null=False, default=False)
+    
 
     def json(self):
         data = {'s': self.strokecolorrgb,
@@ -45,8 +45,11 @@ class Sign(models.Model):
     timeend = models.PositiveSmallIntegerField("Time End", null=True)
     zone = models.ForeignKey(Zone, on_delete=models.SET_NULL, null=True)
     restriction =  models.CharField(max_length=200, null=False, default="No")
+    timelimit = models.PositiveIntegerField("Time Limit(min)", blank=True, default="0", null=True)
     rawtext = models.CharField(max_length=200, null=False, blank=True, default="")
     photo = models.ForeignKey(Photo, null=True, blank=True, on_delete=models.SET_NULL)
+    permitexempt_bool = models.BooleanField("Permit Exempt", null=False, default=False)
+    holiday_bool = models.BooleanField("Holiday Exempt", null=False, default=False)
 
     def applies(self, days, hour):
         for day in days:

@@ -1,5 +1,6 @@
 #map {
   height: 94vh;
+  z-index: 1;
 }
 
 #MapControls {
@@ -31,6 +32,13 @@
 
 #AddressBar label {
   font-weight: 700;
+}
+
+#AddSign {
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto;
+  
 }
 
 #AddressBar input {
@@ -70,6 +78,41 @@
 #Time input {
   color: black;
   padding: 1em 0;
+}
+
+#AddSignContainer {
+  display: none;
+  position: relative;
+  top: 100%;
+  width: 100%;
+  z-index: 100;
+  background: inherit;
+}
+
+#AddSignIconButton {
+  cursor: pointer;
+}
+
+#AddNewSign {
+  width: 100%;
+  text-align: center;
+}
+
+#SignDateTime {
+  padding-top: 2em;
+  height: 70vh;
+}
+
+#SignDateTime input{
+  margin: 0.5em;
+}
+
+.newsignbutton {
+  width: 40vw;
+  line-height: 3em;
+  background: lightgray;
+  border: none;
+  font-size: 24px;
 }
 
 ::-webkit-inner-spin-button { 

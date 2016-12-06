@@ -8,5 +8,6 @@ from . import views
 app_name = 'maps'
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),   
-    url(r'^start/$', views.InitMap, name='test')
+    url(r'^start/$', views.InitMap, name='start'),
+    url(r'^new/$', views.NewSign, name='newsign')
 ]

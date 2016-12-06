@@ -40,17 +40,17 @@ function isSignVisible(hour, start, end) {
 }
 
 
-document.getElementById('datefield').valueAsDate = DATE;
+
 
 var timeslider = document.getElementById("timeslider");
-timeslider.onchange = function() {
+timeslider.oninput = function() {
   
   var hourtime = HOURMIN + (this.value*100);
   hourtime = hourtime > 2400 ? hourtime-2400 : hourtime;
   
   var toshow = [];
   var tohide = [];
-  console.log(hourtime);
+  // console.log(hourtime);
   var poly;
 
   for (var index in zonepolys.active.visible) {
@@ -100,7 +100,7 @@ timeslider.onchange = function() {
   }
 
   zonepolys.active = {visible: keepvisible.concat(toshow), hidden: keephidden.concat(tohide)};
-  console.log(zonepolys);
+  // console.log(zonepolys);
 }
 
 
@@ -289,8 +289,29 @@ function makeNewPoly(coords, stroke, fill, vis) {
 
 
 
+function toggleAddSign() {
+  $('#MapContainer').slideToggle("slow");
+  $('#AddSignContainer').slideToggle("slow");
+};
+
+
+
+window.onload = function() {
+
+  document.getElementById('datefield').valueAsDate = DATE;
+
+  $('#NewSignForm').submit(function(e) {
+    $.post("./new/", $(this).serialize(), function(response) {
+      alert(response.message);
+    });
+    e.preventDefault();
+    toggleAddSign();
+  });
+};
+
+
 function initMap() {
-    GOOGLEMAP = new google.maps.Map(document.getElementById('map'), {
+  GOOGLEMAP = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 34.089557, lng: -118.358198},
     zoom: 19,
     clickableIcons: false,
@@ -381,5 +402,6 @@ function initMap() {
 
   GOOGLEMAP.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('AddressBar'));
   GOOGLEMAP.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('MapControls'));
+  GOOGLEMAP.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('AddSign'));
 
 };
