@@ -13,31 +13,49 @@ from .models import Photo
 from decimal import *
 
 import datetime
+import requests
 import time
 import math
 
+
+
 """
 todo:
-1) based on location, determine address and then determine street block
-2) 
+1) based on location, determine address (based on input? or based on the center of the map? Dropped pin?)
+2) determine street block from address 
+3) 
+
+SM:
+1) Adjust map page bar to reflect 24-hour timeframe, complete with color-codings.
+- No long going to use range slider bar. 
+- Selecting bar will focus map & display sign details. 
 """
+
+CENSUSURL = "https://geocoding.geo.census.gov/geocoder/locations/address"
+GOOGLEURL = "http://maps.google.com/maps/api/geocode/json"
+
+CENSUSDATA = {'street':'',
+            'city':'',
+            'state':'',
+            'benchmark':9,
+            'format':'json'}
 
 class MapsResponse:
     def __init__(self):
         self.signs = {} #this is what I ultimately need.
 
     def addSign(self, sign, sc, zc):
-        coords = list(sc)[0]
+        coords = sc
         imgpath = sign.photo.image.url
         tempdict = {'i': imgpath,
                     'r': sign.restriction,
                     'c': coords.as_set(),
-                    's': sign.timestart,
-                    'e': sign.timeend,
+                    't': sign.times_asjson(),
                     'z': sign.zone.json()
                     }
         tempdict['z'][sign.zone_id]['c'] = self.formatZoneCoordinates(zc)
         self.signs[sign.id] = tempdict
+
 
 
     def formatZoneCoordinates(self, zc):
@@ -88,13 +106,45 @@ def generateMapCoordinates(north, south, east, west):
                 lng__gte=west
             )
 
+def FindBlock(request):
+    response = {}
+    
+    values = CENSUSDATA
+    values['state'] = request.POST['state']
+    values['city'] = request.POST['city']
+    values['street'] = request.POST['number'] + " " + request.POST['name']
+
+    req = requests.get(CENSUSURL, params=values)
+    matches = req.json()['result']['addressMatches']
+
+    if matches:
+        fromaddress = matches[0]['addressComponents']['fromAddress']
+        toaddress = matches[0]['addressComponents']['toAddress']
+        tigerline = matches[0]['tigerLine']
+
+        streets = StreetBlock.objects.filter(
+                tigerlineid=tigerline['tigerLineId']
+            ).filter(
+                side=tigerline['side'])
+
+        if streets:
+            coords = MapCoordinates.objects.filter(block_id=streets[0].id)
+            print "Strets", streets[0].id
+            if coords:
+                response['coordinates'] = list(coords)
+                return JsonResponse(response)
+
+        response['address'] = {'from': fromaddress, 'to':toaddress, 'side': tigerline['side']} #if no match
+
+    return JsonResponse(response)
+
+
 def NewSign(request):
     """ Generates a new sign json object to be queued for processing. 
     """
+    print request.POST['location']
+    
     response = {'success': True, 'message': "default success message"}
-
-    print request.POST.items()
-    time.sleep(3)
 
     return JsonResponse(response)
 
@@ -111,17 +161,26 @@ def InitMap(request):
     east = Decimal(request.POST['east'])
     west = Decimal(request.POST['west'])
 
-    mapsqueryset = generateMapCoordinates(north, south, east, west)
+    signs = Sign.objects.filter(
+                pos__lat__lte=north
+            ).filter(
+                pos__lat__gte=south
+            ).filter(
+                pos__lng__lte=east
+            ).filter(
+                pos__lng__gte=west
+            )
 
-    signset = mapsqueryset.exclude(sign_id=None)
-    signids = [c['sign_id'] for c in signset.values('sign_id').annotate(n=Count("pk"))]
-    signs = Sign.objects.filter(id__in=signids)
+    # mapsqueryset = generateMapCoordinates(north, south, east, west)
+
+    # signset = mapsqueryset.exclude(sign_id=None)
+    # signids = [c['sign_id'] for c in signset.values('sign_id').annotate(n=Count("pk"))]
+    # signs = Sign.objects.filter(id__in=signids)
 
     for sign in signs:
         if sign.applies(days, hour):
             zc = MapCoordinates.objects.filter(zone_id=sign.zone_id)
-            sc = MapCoordinates.objects.filter(sign_id=sign.id)
-            response.addSign(sign, sc, zc)
+            response.addSign(sign, sign.pos, zc)
 
-    #print response.as_dict()
+    # print response.as_dict()
     return JsonResponse(response.as_dict())

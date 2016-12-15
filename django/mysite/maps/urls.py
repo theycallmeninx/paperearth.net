@@ -9,5 +9,6 @@ app_name = 'maps'
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),   
     url(r'^start/$', views.InitMap, name='start'),
-    url(r'^new/$', views.NewSign, name='newsign')
+    url(r'^new/$', views.NewSign, name='newsign'),
+    url(r'^findblock/$', views.FindBlock, name='findblock'),
 ]

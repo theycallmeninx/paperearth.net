@@ -31,7 +31,7 @@
           <div id="MapContainer">
             <div id="map"></div>
             <div id="AddressBar">
-              <label><input type="text" id="autoaddress" name="address" placeholder="Search Maps"></label>
+              <label><input type="text" id="autoaddress" name="address" onkeydown="pushAddress(this)" placeholder="Search Maps"></label>
             </div>
             <div id="AddSign">
               <label><img id="AddSignIconButton" onclick="toggleAddSign();" class="toggleaddsign" alt="Add Sign" src="{% static 'images/addsign.png' %}"></label>
@@ -49,57 +49,80 @@
         </div>
         <div id="AddSignContainer">
           <div id="AddNewSign">
-          <h3>New Sign</h3>
-            <form action="" id="NewSignForm" method="post">
-            <div id="SignDateTime">
-              <div id="Week">
-                <div id="Weekends">
-                  <label>Sunday<input name="week" id="su_b" type="checkbox"></label>
-                  <br><label>Saturday<input name="week" id="sa_b" type="checkbox"></label>
-                  <br>
+            <h3>New Sign</h3>
+            <div id="NewSignBanner">
+              <form action="" id="NewSignForm" method="post">
+              <div id="NewSignMap">
+                <div id="NewSignMapBox"></div>
+                <div id="NewSignAddressBar">
+                  <input type="text" id="NewSignAutoaddress" readonly>
                 </div>
-                <div id="Weekdays">
-                  <label>Monday<input name="week" id="mo_b" type="checkbox"></label>
-                  <br><label>Tuesday<input name="week" id="tu_b" type="checkbox"></label>
-                  <br><label>Wednesday<input name="week" id="we_b" type="checkbox"></label>
-                  <br><label>Thursday<input name="week" id="th_b" type="checkbox"></label>
-                  <br><label>Friday<input name="week" id="fr_b" type="checkbox"></label>
-                  <br>
+                <div id="NewSignBlockButtons">
+                  <input type="Button" value="Block" onclick="layerBlockZone('0')"><br>
+                  <input type="Button" value="1" onclick="layerBlockZone('1')"><br>
                 </div>
               </div>
-              <div id="TimeBanner">
-                <div id="TimeBannerLeft">
-                  <label>Start</label>
-                  <div style="margin:0 auto;" class="input-group clockpicker" data-autoclose="true" >
-                    <input name="timestart" type="text" class="form-control" placeholder="09:00">
+              <div id="NewSignDateTime">
+                <div id="TimeSlots">
+                  <div id="TimeSlot" class="timeslot">
+                  <h4>Sign Time Details</h4>
+                    <div id="TimeSlotDetails" >
+                      <div id="TimesStartEnd">
+                        <label>Start</label>
+                        <div class="input-group clockpicker" data-autoclose="true" >
+                          <input name="timestart" type="text" class="form-control" placeholder="09:00">
+                        </div>
+                        <br><br>
+                        <label>End</label>
+                        <div class="input-group clockpicker" data-autoclose="true">
+                          <input name="timeend" type="text" class="form-control" placeholder="17:00">
+                        </div>
+                      </div>
+                      <div id="WeekDays">
+                        <label>Sunday<input name="week" id="su_b" type="checkbox"></label>
+                        <br><label>Saturday<input name="week" id="sa_b" type="checkbox"></label>
+                        <br><label>Monday<input name="week" id="mo_b" type="checkbox"></label>
+                        <br><label>Tuesday<input name="week" id="tu_b" type="checkbox"></label>
+                        <br><label>Wednesday<input name="week" id="we_b" type="checkbox"></label>
+                        <br><label>Thursday<input name="week" id="th_b" type="checkbox"></label>
+                        <br><label>Friday<input name="week" id="fr_b" type="checkbox"></label>
+                        <br>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div id="TimeBannerRight">
-                  <label>End</label>
-                  <div style="margin:0 auto;" class="input-group clockpicker" data-autoclose="true">
-                    <input name="timeend" type="text" class="form-control" placeholder="17:00">
+                <div id="AdditionalsBanner">
+                  <div id="SignOptions">
+                    <label>Time Limit
+                      <select name="timelimit" form="NewSignForm">
+                        <option value="0">No Parking</option>
+                        <option value="5">5 Min.</option>
+                        <option value="10">10 Min</option>
+                        <option value="15">15 Min.</option>
+                        <option value="20">20 Min.</option>
+                        <option value="30">30 Min.</option>
+                        <option value="45">45 Min.</option>
+                        <option value="60">1 Hour</option>
+                        <option value="120">2 Hours</option>
+                        <option value="180">3 Hours</option>
+                        <option value="240">4 Hours</option>
+                        <option value="360">6 Hours</option>
+                      </select>
+                    </label>
+                    <br><label>Permit Exempt<input name="permit" id="permit_b" type="checkbox"> 
+                    <input name="permitname" type="text" id="permitname" placeholder="Permit Name/ID" disabled></label>                  
+                    <br><label>Metered<input name="metered" id="metered_b" type="checkbox"></label>
+                    <label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>             
+                    <br><label>Commercial Only<input name="commericial" id="commercial_b" type="checkbox"></label>
+                    <br>
                   </div>
-                </div>
-              </div>
-              <div id="AdditionalsBanner">
-                <div id="Restrictions">
-                  <br><label>Time Limit<input name="timelimit" type="text"></label>
-                  <br><label>Permit Exempt<input name="permit" id="permit_b" type="checkbox"> 
-                  <input name="permitname" type="text" id="permitname" placeholder="Permit Name/ID" disabled></label>
-                  <br>
-                </div>
-                <div id="SignOptions">
-                  <br><label>Metered<input name="metered" id="metered_b" type="checkbox"></label>
-                  <br><label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>             
-                  <br><label>Commercial Only<input name="commericial" id="commercial_b" type="checkbox"></label>
-                  <br>
                 </div>
               </div>
             </div>
             <div id="NewSignButtons">
               <input class="newsignbutton" type="button" value="Cancel" onclick="toggleAddSign()">
               <input class="newsignbutton" type="submit" value="Submit New Sign">
-            </div>              
+            </div>
             </form>
           </div>
         </div>

@@ -3,7 +3,13 @@
 
 
 var DATE = new Date();
+var DIRECTIONS;
 var GOOGLEMAP;
+var NEWSIGNMAP;
+var NEWSIGNCENTERPIN;
+var NEWSIGNBLOCKPOLY;
+var GEOCODER;
+var CENTERPIN;
 var AUTOCOMPLETE;
 
 var zonepolys = {active: { visible:[], hidden:[] }, todelete:[]};
@@ -206,7 +212,7 @@ function makeNewPoly(coords, stroke, fill, vis) {
     blockcoords.push({  
       lat: parseFloat(coords[order]['lat']),
       lng: parseFloat(coords[order]['lng'])
-    });   
+    });
   }
 
   return new google.maps.Polygon({
@@ -220,11 +226,136 @@ function makeNewPoly(coords, stroke, fill, vis) {
   });
 }
 
-function toggleAddSign() {
-  $('#MapContainer').slideToggle("slow");
-  $('#AddSignContainer').slideToggle("slow");
-};
+function createSignBlockPoly(coordinates) {
+  return new google.maps.Polygon({
+    paths: coordinates,
+    strokeColor: "red",
+    strokeOpacity: 1,
+    strokeWeight: 2,
+    fillColor: "url('https://upload.wikimedia.org/wikipedia/en/f/f4/Xp_sspipes_candycane_tile.png')",
+    fillOpacity: 0.5,
+    editable: true,
+    map: NEWSIGNMAP
+  });
+}
 
+function calculateNormal(c1, c2, side) {
+
+  var dx = parseFloat(c2.lng) - parseFloat(c1.lng);
+  var dy = parseFloat(c2.lat) - parseFloat(c1.lat);
+  var magnitude = Math.sqrt((dx*dx) + (dy*dy));
+  var scalar = magnitude / 0.000150;
+  if (side == "R") {
+    return {'lat': parseFloat(c1.lat)+(dx/scalar), 'lng': parseFloat(c1.lng)-(dy/scalar)};
+  } else {
+    return {'lat': parseFloat(c1.lat)-(dx/scalar), 'lng': parseFloat(c1.lng)+(dy/scalar)};
+  }
+}
+
+function layerBlockZone(input) {
+  //get address, get address block coordinates - CENSUS
+
+  //with the ends defined, create a travel route with origin and destination
+  //if L - origin/dest, R - dest/origin
+  
+  if (!(NEWSIGNBLOCKPOLY == null)) {
+    NEWSIGNBLOCKPOLY.setMap(null);
+    NEWSIGNBLOCKPOLY = null;
+  }
+
+  GEOCODER.geocode({location: NEWSIGNMAP.getCenter().toJSON()}, function(results) {
+    var res = results[0];
+    var data = {
+      state: res.address_components[5].short_name,
+      city: res.address_components[3].short_name,
+      name: res.address_components[1].long_name,
+      number: res.address_components[0].long_name
+      };
+    $.post("./findblock/", data, function(response) {
+      var coordinates = [];
+      var base = res.address_components[1].short_name + " " +
+        res.address_components[3].long_name + " " +
+        res.address_components[5].long_name + " " +
+        res.address_components[6].long_name;
+
+      if ('address' in response) {
+        var orig = response['address']['to'] + " " + base;
+        var dest = response['address']['from'] + " " + base;
+  
+        DIRECTIONS.route({travelMode: google.maps.TravelMode.DRIVING, destination:dest, origin: orig}, function(results, status) {
+          var coords = results.routes[0].overview_path;
+          var c;
+          var tempcoords;
+          for (var point in coords) {
+            var index = parseInt(point);
+            c = coords[point].toJSON();
+            if (point == coords.length-1) {
+              tempcoords = {
+                'lat': parseFloat(c.lat)+(parseFloat(c.lat)-parseFloat(coords[index-1].lat())),
+                'lng': parseFloat(c.lng)+(parseFloat(c.lng)-parseFloat(coords[index-1].lng()))
+              };
+            }
+            else {
+              tempcoords = coords[index+1].toJSON();
+            }
+            coordinates.push(c);
+            coordinates.unshift(calculateNormal(c, tempcoords, response['address']['side']));
+          }
+          NEWSIGNBLOCKPOLY = createSignBlockPoly(coordinates);
+        });
+      } else if ('coordinates' in response) {
+        coordinates = response['coordinates'];
+        NEWSIGNBLOCKPOLY = createSignBlockPoly(coordinates);
+      }      
+    });
+  }); 
+}
+
+
+function toggleAddSign() {
+
+  $('#AddSignContainer').slideToggle("slow", function initialize() {
+    if (NEWSIGNMAP == null) {
+      NEWSIGNMAP = new google.maps.Map(document.getElementById('NewSignMapBox'), {
+        center: {lat: 34.089557, lng: -118.358198},
+        zoom: 17,
+        clickableIcons: false,
+        zoomControl: false,
+        streetViewControl: false,
+        mapTypeControl: false,
+        styles: mapstyle,
+        scaleControl: true,
+      });
+
+      NEWSIGNMAP.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('NewSignAddressBar'));
+      NEWSIGNMAP.controls[google.maps.ControlPosition.LEFT_CENTER].push(document.getElementById('NewSignBlockButtons'));
+
+      NEWSIGNCENTERPIN = new google.maps.Marker({
+        position: NEWSIGNMAP.getCenter(),
+        map: NEWSIGNMAP,
+        animation: google.maps.Animation.DROP,
+      });
+
+      google.maps.event.addListener(NEWSIGNMAP, 'dragend', function(){
+        GEOCODER.geocode({location: NEWSIGNMAP.getCenter().toJSON()}, function(results) {
+          $('#NewSignAutoaddress').val(results[0].formatted_address);
+          });
+        NEWSIGNCENTERPIN.setPosition(NEWSIGNMAP.getCenter().toJSON());
+      });
+
+      google.maps.event.addListenerOnce(NEWSIGNMAP, 'idle', function() {
+        GEOCODER.geocode({location: NEWSIGNMAP.getCenter().toJSON()}, function(results) {
+          $('#NewSignAutoaddress').val(results[0].formatted_address);
+        });
+      });
+    }
+  });
+
+
+
+  $('#MapContainer').slideToggle("slow");
+
+};
 
 
 window.onload = function() {
@@ -241,24 +372,39 @@ window.onload = function() {
 
     for (var index in zonepolys.active.visible) {
       poly = zonepolys.active.visible[index];
-      if (!isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
-        tohide.push(poly);
-        poly.sign.marker.setVisible(false);
-        for (var zone in poly.zones) {
-          poly.zones[zone].setVisible(false);
-          // console.log(zone);
+      for (var slot in poly.sign.json.t) {
+        // console.log(slot);
+        for (var times in poly.sign.json.t[slot]['t']) {
+          var time = poly.sign.json.t[slot]['t'][times];
+          if (!isSignVisible(hourtime, time.s, time.e)) {
+        // if (!isSignVisible(hourtime, poly.sign.json.t.t[slot].s, poly.sign.json.t.t[slot].e)) {
+            tohide.push(poly);
+            poly.sign.marker.setVisible(false);
+            for (var zone in poly.zones) {
+              poly.zones[zone].setVisible(false);
+              // console.log(zone);
+            }
+            break;
+          }
         }
       }
     }
 
     for (var index in zonepolys.active.hidden) {
       poly = zonepolys.active.hidden[index];
-      if (isSignVisible(hourtime, poly.sign.json.s, poly.sign.json.e)) {
-        toshow.push(poly);      
-        poly.sign.marker.setVisible(true);
-        for (var zone in poly.zones) {
-          poly.zones[zone].setVisible(true);
-          // console.log(zone);
+      for (var slot in poly.sign.json.t) {
+        // console.log(slot);
+        for (var times in poly.sign.json.t[slot]['t']) {
+          var time = poly.sign.json.t[slot]['t'][times];
+          if (isSignVisible(hourtime, time.s, time.e)) {
+            toshow.push(poly);      
+            poly.sign.marker.setVisible(true);
+            for (var zone in poly.zones) {
+              poly.zones[zone].setVisible(true);
+              // console.log(zone);
+            }
+            break;
+          }
         }
       }
     }
@@ -267,7 +413,15 @@ window.onload = function() {
     if (zonepolys.active.visible.length > 0) {
       keepvisible = zonepolys.active.visible.filter( function (sign)
       {
-        return (isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
+        for (var slot in sign.sign.json.t) {
+          for (var times in sign.sign.json.t[slot]['t']) {
+            var time = sign.sign.json.t[slot]['t'][times];
+            if (isSignVisible(hourtime, parseInt(time.s), parseInt(time.e))) {
+              return true;
+            }
+          }
+        }
+        return false;
       });
     }
 
@@ -275,10 +429,19 @@ window.onload = function() {
     if (zonepolys.active.hidden.length > 0) {
       keephidden = zonepolys.active.hidden.filter( function (sign)
       {
-        return !(isSignVisible(hourtime, sign.sign.json.s, sign.sign.json.e));
+        for (var slot in sign.sign.json.t) {
+          for (var times in sign.sign.json.t[slot]['t']) {
+            var time = sign.sign.json.t[slot]['t'][times];
+            if (isSignVisible(hourtime, parseInt(time.s), parseInt(time.e))) {
+              return false;
+            }
+          }
+        }
+        return true;
       });
     }
 
+    // console.log(zonepolys.active);
     zonepolys.active = {visible: keepvisible.concat(toshow), hidden: keephidden.concat(tohide)};
   }
 
@@ -294,13 +457,30 @@ window.onload = function() {
   });
 
   $('#NewSignForm').submit(function(e) {
-    $.post("./new/", $(this).serialize(), function(response) {
-      alert(response.message);
-    });
     e.preventDefault();
+    var center = NEWSIGNMAP.getCenter();
+    var formdata = $(this).serialize();
+    GEOCODER.geocode({location: center.toJSON()}, function(results) {
+      var data = {'location': results[0], 'form': formdata};
+      console.log(data);
+      $.post("./new/", data, function(response) {
+        alert(response.message);
+      });
+    });
     toggleAddSign();
   });
+
+  $("#autoaddress").keyup( function(event){
+    if(event.keyCode == 13) {
+      GEOCODER.geocode({address: this.value}, function(results) {
+        CENTERPIN.setPosition(results[0].geometry.location.toJSON());
+        GOOGLEMAP.setCenter(results[0].geometry.location.toJSON());
+      });
+    }
+  });
 };
+
+
 
 
 function initMap() {
@@ -314,6 +494,10 @@ function initMap() {
     styles: mapstyle,
     scaleControl: true,
   });
+
+
+  DIRECTIONS = new google.maps.DirectionsService;
+  GEOCODER = new google.maps.Geocoder;
 
   AUTOCOMPLETE = new google.maps.places.Autocomplete(
       (document.getElementById('autoaddress')),
@@ -333,7 +517,15 @@ function initMap() {
     }
   };
 
-  function addMarker(origin, imgurl, title, visible) {
+  CENTERPIN = new google.maps.Marker({
+      position: GOOGLEMAP.getCenter(),
+      map: GOOGLEMAP,
+      animation: google.maps.Animation.DROP,
+    });
+
+
+
+  function addSignMarker(origin, imgurl, title, visible) {
     var feature = {
       position: new google.maps.LatLng(origin['lat'],origin['lng']),
       type: 'caution',
@@ -358,6 +550,8 @@ function initMap() {
     return marker;
   }
 
+  
+
   google.maps.event.addListenerOnce(GOOGLEMAP, 'idle', function(){
     var postdata = GOOGLEMAP.getBounds().toJSON();
     postdata['date'] = Date.now();
@@ -370,9 +564,17 @@ function initMap() {
         for (var signid in response) {
           var sign = response[signid];
           var zones = sign['z'];
+          var times = sign['t']['t'];
+          var visible = false;
 
-          var visible = isSignVisible(HOURMIN, parseInt(sign['s']), parseInt(sign['e']));
-          var signMarker = addMarker(sign['c'], sign['i'], sign['r'], visible);
+          for (var t in times) {
+            if (isSignVisible(HOURMIN, parseInt(times[t].s), parseInt(times[t].e))) {
+              visible = true;
+              break;
+            }
+          }
+          
+          var signMarker = addSignMarker(sign['c'], sign['i'], sign['r'], visible);
 
           var tempzones = [];
           for (var zone in zones) {
@@ -391,8 +593,17 @@ function initMap() {
         }
       }
     });
+
+    google.maps.event.addListener(AUTOCOMPLETE, 'place_changed', function () {
+      GEOCODER.geocode({address: AUTOCOMPLETE.getPlace().formatted_address}, function(results) {        
+        CENTERPIN.setPosition(AUTOCOMPLETE.getPlace().geometry.location.toJSON());
+        GOOGLEMAP.setCenter(AUTOCOMPLETE.getPlace().geometry.location.toJSON());      
+      });
+    });
+
   });
 
+  
   GOOGLEMAP.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('AddressBar'));
   GOOGLEMAP.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('DateTimeBar'));
   GOOGLEMAP.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('AddSign'));

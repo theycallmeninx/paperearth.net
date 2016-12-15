@@ -3,26 +3,28 @@ from .models import StreetBlock
 from .models import Zone
 from .models import Photo
 from .models import Sign
+from .models import TimeSlot
 from .models import CityStateCode
 from .models import MapCoordinates
+
+
 
 
 class ZoneMapCoordinatesInline(admin.TabularInline): 
     model = MapCoordinates
     verbose_name = "Coordinates"
-    exclude = ('sign',)
     extra = 1 #blank rows
 
-class SignMapCoordinatesInline(admin.TabularInline): 
-    model = MapCoordinates
-    verbose_name = "Coordinates"
-    exclude = ('zone','order')
-    extra = 0 #blank rows
 
+# class SignTimeSlotsInline(admin.TabularInline): 
+#     model = TimeSlot
+#     verbose_name = "Times"
+#     extra = 1
 
 class SignInline(admin.TabularInline):
-    model = StreetBlock.signs.through
+    model = Sign.blocks.through
     verbose_name = "Signs"
+    list_display = ('order', 'lat', 'lng', 'zone', 'block')
     extra = 1
 
 class ZoneAdmin(admin.ModelAdmin):
@@ -30,14 +32,16 @@ class ZoneAdmin(admin.ModelAdmin):
     inlines = [ZoneMapCoordinatesInline]
 
 class SignAdmin(admin.ModelAdmin):
-    fields = ['days', ('timestart', 'timeend'), ('zone', 'restriction'), 'rawtext', 'photo']
-    inlines = [SignMapCoordinatesInline]
+    fields = [('timeslotone', 'timeslottwo', 'timeslotthree'),
+            ('zone', 'restriction'), 
+              'blocks', 'rawtext', 'photo']
+    # inlines = [SignTimeSlotsInline]
 
 class CityStateCodeAdmin(admin.ModelAdmin):
     fields = ['city', 'state', 'zipcode']
 
 class StreetBlockAdmin(admin.ModelAdmin):
-    fields = [('addresshigh', 'addresslow', 'side'), 'name', 'csc']
+    fields = [('addresshigh', 'addresslow', 'side'), 'tigerlineid', 'name', 'csc']
     inlines = [SignInline]
 
 class PhotoAdmin(admin.ModelAdmin):
@@ -46,7 +50,7 @@ class PhotoAdmin(admin.ModelAdmin):
 
 class CoordsAdmin(admin.ModelAdmin):
     fields = [('order', 'lat', 'lng'), ('sign', 'zone', 'block')]
-    list_display = ('order', 'lat', 'lng', 'sign', 'zone', 'block')
+    list_display = ('order', 'lat', 'lng', 'zone', 'block')
 
 admin.site.register(Zone, ZoneAdmin)
 admin.site.register(Sign, SignAdmin)
