@@ -12,6 +12,8 @@ var GEOCODER;
 var CENTERPIN;
 var AUTOCOMPLETE;
 
+
+
 var zonepolys = {active: { visible:[], hidden:[] }, todelete:[]};
 var HOURMIN = parseInt(DATE.getHours().toString() + DATE.getMinutes().toString());
 
@@ -229,41 +231,32 @@ function makeNewPoly(coords, stroke, fill, vis) {
 function createSignBlockPoly(coordinates) {
   return new google.maps.Polygon({
     paths: coordinates,
-    strokeColor: "red",
-    strokeOpacity: 1,
-    strokeWeight: 2,
-    fillColor: "url('https://upload.wikimedia.org/wikipedia/en/f/f4/Xp_sspipes_candycane_tile.png')",
+    strokeWeight: 0,
+    fillColor: "red",
     fillOpacity: 0.5,
     editable: true,
+    dragable: true,
     map: NEWSIGNMAP
   });
 }
 
-function calculateNormal(c1, c2, side) {
-
+function calculateNormal(c1, c2) {
   var dx = parseFloat(c2.lng) - parseFloat(c1.lng);
   var dy = parseFloat(c2.lat) - parseFloat(c1.lat);
   var magnitude = Math.sqrt((dx*dx) + (dy*dy));
   var scalar = magnitude / 0.000150;
-  if (side == "R") {
-    return {'lat': parseFloat(c1.lat)+(dx/scalar), 'lng': parseFloat(c1.lng)-(dy/scalar)};
-  } else {
-    return {'lat': parseFloat(c1.lat)-(dx/scalar), 'lng': parseFloat(c1.lng)+(dy/scalar)};
-  }
+  return {'lat': parseFloat(c1.lat)+(dx/scalar), 'lng': parseFloat(c1.lng)-(dy/scalar)};
 }
 
-function layerBlockZone(input) {
-  //get address, get address block coordinates - CENSUS
-
-  //with the ends defined, create a travel route with origin and destination
-  //if L - origin/dest, R - dest/origin
-  
+function layerBlockZone(numcars) {
+  numcars = parseInt(numcars);
+  var mapcenter = NEWSIGNMAP.getCenter().toJSON();
   if (!(NEWSIGNBLOCKPOLY == null)) {
     NEWSIGNBLOCKPOLY.setMap(null);
     NEWSIGNBLOCKPOLY = null;
   }
 
-  GEOCODER.geocode({location: NEWSIGNMAP.getCenter().toJSON()}, function(results) {
+  GEOCODER.geocode({location:mapcenter}, function(results) {
     var res = results[0];
     var data = {
       state: res.address_components[5].short_name,
@@ -272,35 +265,75 @@ function layerBlockZone(input) {
       number: res.address_components[0].long_name
       };
     $.post("./findblock/", data, function(response) {
+      var directionoptions = {travelMode: google.maps.TravelMode.DRIVING, destination:null, origin: null};
       var coordinates = [];
+      var side = response['address']['side'];
       var base = res.address_components[1].short_name + " " +
         res.address_components[3].long_name + " " +
         res.address_components[5].long_name + " " +
         res.address_components[6].long_name;
 
       if ('address' in response) {
-        var orig = response['address']['to'] + " " + base;
-        var dest = response['address']['from'] + " " + base;
-  
-        DIRECTIONS.route({travelMode: google.maps.TravelMode.DRIVING, destination:dest, origin: orig}, function(results, status) {
-          var coords = results.routes[0].overview_path;
+        var address = response['address'];
+        var toadd = address.to + " " + base;
+        var fromadd = address.from + " " + base;
+
+        if (side == "R") {
+          directionoptions.destination = (numcars == 0) ? fromadd : mapcenter;
+          directionoptions.origin = toadd;
+        } else {
+          directionoptions.origin = fromadd;
+          directionoptions.destination = (numcars == 0) ? toadd : mapcenter;
+        }
+
+        DIRECTIONS.route(directionoptions, function(results, status) {
+
+          var coordinates = [];
+          var tempcoordinates = [];
           var c;
-          var tempcoords;
-          for (var point in coords) {
-            var index = parseInt(point);
-            c = coords[point].toJSON();
-            if (point == coords.length-1) {
-              tempcoords = {
-                'lat': parseFloat(c.lat)+(parseFloat(c.lat)-parseFloat(coords[index-1].lat())),
-                'lng': parseFloat(c.lng)+(parseFloat(c.lng)-parseFloat(coords[index-1].lng()))
+          var tempset;
+          var route = results.routes[0].overview_path;
+
+          if (numcars == 0) {
+             for (var point in route) {
+              tempcoordinates.push(route[point].toJSON());
+            }
+          } else {
+           var magnitude = 0;
+            for (var i = route.length; i-- > 0; ) {
+              var c1 = route[i-1].toJSON();
+              var c2 = route[i].toJSON();
+              tempcoordinates.unshift(c2);
+              var dy = parseFloat(c1.lat)-parseFloat(c2.lat);
+              var dx = parseFloat(c1.lng)-parseFloat(c2.lng);
+              var cmagnitude = Math.sqrt((dx*dx) + (dy*dy));
+              magnitude += cmagnitude;
+              if ( magnitude > (0.000050*numcars)) {
+                var scalar = cmagnitude / (0.000050*numcars);
+                tempcoordinates.unshift({
+                  'lat': parseFloat(c2.lat)+(dy/scalar),
+                  'lng': parseFloat(c2.lng)+(dx/scalar)
+                });
+                break;
+              }
+            }
+          }
+
+          for (var i=0, l=tempcoordinates.length; i<l; i++ ) {
+            c = tempcoordinates[i]
+            if (i == l-1) {
+              tempset = {
+                'lat': parseFloat(c.lat)+(parseFloat(c.lat)-parseFloat(tempcoordinates[i-1].lat)),
+                'lng': parseFloat(c.lng)+(parseFloat(c.lng)-parseFloat(tempcoordinates[i-1].lng))
               };
             }
             else {
-              tempcoords = coords[index+1].toJSON();
+              tempset = tempcoordinates[i+1];
             }
             coordinates.push(c);
-            coordinates.unshift(calculateNormal(c, tempcoords, response['address']['side']));
+            coordinates.unshift(calculateNormal(c, tempset));
           }
+
           NEWSIGNBLOCKPOLY = createSignBlockPoly(coordinates);
         });
       } else if ('coordinates' in response) {

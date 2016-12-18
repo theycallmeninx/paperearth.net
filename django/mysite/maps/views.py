@@ -129,7 +129,7 @@ def FindBlock(request):
 
         if streets:
             coords = MapCoordinates.objects.filter(block_id=streets[0].id)
-            print "Strets", streets[0].id
+            print "Streets", streets[0].id
             if coords:
                 response['coordinates'] = list(coords)
                 return JsonResponse(response)

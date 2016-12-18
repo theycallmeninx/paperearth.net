@@ -1,4 +1,5 @@
 *.pyc
 *.pid
 db.sqlite3
-
+sqlite3
+django/mysite/maps/migrations/*

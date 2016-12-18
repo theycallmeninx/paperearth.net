@@ -52,17 +52,20 @@
             <h3>New Sign</h3>
             <div id="NewSignBanner">
               <form action="" id="NewSignForm" method="post">
-              <div id="NewSignMap">
+              <div id="NewSignMapBanner">
                 <div id="NewSignMapBox"></div>
                 <div id="NewSignAddressBar">
                   <input type="text" id="NewSignAutoaddress" readonly>
                 </div>
                 <div id="NewSignBlockButtons">
-                  <input type="Button" value="Block" onclick="layerBlockZone('0')"><br>
+                  <input type="Button" value="B" alt="Block" onclick="layerBlockZone('0')"><br>
                   <input type="Button" value="1" onclick="layerBlockZone('1')"><br>
+                  <input type="Button" value="2" onclick="layerBlockZone('2')"><br>
+                  <input type="Button" value="3" onclick="layerBlockZone('3')"><br>
                 </div>
               </div>
-              <div id="NewSignDateTime">
+              <div id="NewSignPhotoBanner"></div>
+              <div id="NewSignDetailsBanner">
                 <div id="TimeSlots">
                   <div id="TimeSlot" class="timeslot">
                   <h4>Sign Time Details</h4>
@@ -93,8 +96,7 @@
                 </div>
                 <div id="AdditionalsBanner">
                   <div id="SignOptions">
-                    <label>Time Limit
-                      <select name="timelimit" form="NewSignForm">
+                      <select name="timelimit" form="NewSignForm" placeholder="Time Limit">
                         <option value="0">No Parking</option>
                         <option value="5">5 Min.</option>
                         <option value="10">10 Min</option>
@@ -108,11 +110,9 @@
                         <option value="240">4 Hours</option>
                         <option value="360">6 Hours</option>
                       </select>
-                    </label>
-                    <br><label>Permit Exempt<input name="permit" id="permit_b" type="checkbox"> 
-                    <input name="permitname" type="text" id="permitname" placeholder="Permit Name/ID" disabled></label>                  
+                    <input name="permitname" type="text" id="permitname" placeholder="Permit Name/ID (optional)">
                     <br><label>Metered<input name="metered" id="metered_b" type="checkbox"></label>
-                    <label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>             
+                    <br><label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>             
                     <br><label>Commercial Only<input name="commericial" id="commercial_b" type="checkbox"></label>
                     <br>
                   </div>

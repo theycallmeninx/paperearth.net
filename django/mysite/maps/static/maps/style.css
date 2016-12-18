@@ -79,8 +79,8 @@
   position: relative;
   top: 100%;
   width: 100%;
-  z-index: 100;
-  background: inherit;
+  z-index: 10;
+  background: white;
 }
 
 #AddSignIconButton {
@@ -88,26 +88,38 @@
 }
 
 #AddNewSign {
-  width: 100%;
+  max-width: 1090px;
   text-align: center;
+  margin: 0 auto;
+  padding: 0 2em;
 }
 
 
 #NewSignBanner {
-  display: flex;
+  height: 80%;
   margin: 0 auto;
 }
 
-#NewSignMap {
-  float: left;
-  width: 49vw;
+#NewSignMapBanner {
+  width: 100%;
+  height: 90vh;
+  padding-top: 10vh;
 }
 
-#NewSignDateTime {
-  float: right;
-  width: 49vw;
+#NewSignDetailsBanner {
+  padding-top: 5vh;
+  display: block;
+  width: 100%;
   text-align: center;
   margin: 0 auto;
+}
+
+#NewSignPhotoBanner {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  margin: 0 auto;
+  background: grey;
 }
 
 #TimeSlots {
@@ -124,7 +136,7 @@
 }
 
 #TimeSlot input{
-  width: 10em;
+  width: 6em;
 }
 
 #TimesStartEnd {
@@ -135,7 +147,6 @@
   float: right;
   width: 175px;
   text-align: right;
-  padding-right: 2em;
 }
 
 #WeekDays input{
@@ -149,7 +160,6 @@
 
 .timeslot {
   overflow: auto;
-  padding: 1em 3em;
   width: 100%;
   height: auto;
   margin: 0 auto;
@@ -164,7 +174,6 @@
 
 #AdditionalsBanner {
   margin: 0 auto;
-  padding-right: 3em;
 }
 
 #AdditionalsBanner label{
@@ -172,20 +181,19 @@
 }
 
 #AdditionalsBanner input{
-  padding: 0.5em;
   margin-top: 0.3em;
   margin-left: 1em;
+  padding: 0.4em 0.5em;
 }
 
 #SignOptions {
-  padding-right: 3em;
   text-align: right;
   margin: 0 auto;
 }
 
 #SignOptions select{
   padding: 0.5em;
-  width: 15em;
+  width: 35%;
   margin-left: 1em;
 }
 
@@ -202,26 +210,25 @@
 }
 
 #NewSignButtons {
-  width: 100vw;
+  width: 100%;
+}
+
+#NewSignBlockButtons input{
+  width: 3em;
 }
 
 #NewSignMapBox {
-  width: 40vw;
-  height: 40vh;
-  margin: 0 auto;
+max-width: 80vw;
+height: 60vh;
+margin: 0 auto;
 }
 
-
 .newsignbutton {
-  width: 40vw;
+  width: 48%;
   line-height: 3em;
   background: lightgray;
   border: none;
   font-size: 24px;
-}
-
-.gmnoprint {
-  display: none;
 }
 
 ::-webkit-inner-spin-button { 
