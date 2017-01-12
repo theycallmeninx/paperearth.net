@@ -1,0 +1,105 @@
+/* MAIN PAGE DETAIL */
+
+@media (max-device-width: 480px) {
+   .BlockContent { font-size: 4vw; }
+   .BlockContent h2 { font-size: 5vw; }
+   .BlockContent h3 { font-size: 4vw; }
+   .PollsContent { margin-bottom: 3vh; }
+   #MainBanner a:link, #MainBanner a:visited  { font-size: 2.5vw; }
+}
+
+html, body {
+  font-family: Helvetica,sans-serif;
+  margin: 0;
+  height: 100%;
+  background: rgb(246, 250, 255);
+  color: rgb(77,61,105);
+  /*background: rgb(60,153,78);*/
+}
+
+div {
+  display: block;
+}
+
+a {
+  font-weight: 700;
+}
+
+a:link, a:visited  {
+  color: rgb(77,61,105);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
+  color: steelblue;
+  font-weight: 600;
+}
+
+
+.Content {
+  display: block;
+  margin: 0 0;
+  width: 100%;
+}
+
+.BlockContent {
+  padding-top: 5vh;
+  display: block;
+  text-align: center;
+}
+
+.BlockContent h2 {
+  color: white;
+}
+
+#MainBanner {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5vh;
+  width: 100%;
+  background: rgba(77,61,135, 0.7);
+  box-shadow: 0 0 25px;
+  z-index: 100;
+  padding: 1vh 0.3vw;
+}
+
+#MainBanner a:link, #MainBanner a:visited  {
+  color: lightcyan;
+  text-decoration: none;
+}
+
+
+#MainBannerLeft {
+  float: left;
+  width: 50%;
+  margin: 0;
+}
+
+#MainBannerLeft h1 {
+  font-weight: bold;
+  margin: 0 0 0 1em;
+  color: lightcyan;
+  line-height: 3vh;
+}
+
+#MainBannerRight {
+  color: black;
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+
+#MainNavLinks {
+  margin-top: 0.5vh;
+  margin-bottom: 0;
+}
+
+
+#MainNavLinks li{
+  list-style: none;
+  display: inline-block;
+  margin-left: 0;
+  padding: 0.2em 0.2em;
+}

@@ -7,6 +7,7 @@
     <title>Django Polls Web App</title>
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'mysite/base.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'mysite/style.css' %}" />
     <!-- Latest compiled CSS for Bootstrap -->
     
@@ -14,13 +15,12 @@
   <body>
     <div class="Content">    
       <div id="MainBanner">
-        <div id="mainbannerleft">
+        <div id="MainBannerLeft">
           <a href="/"><img style="float:left;" size="75%" src="{% static 'images/homeicon2.png' %}"></a>
           <h1>Paper Earth! Projects</h1>
         </div>
-        <div id="mainbannerright">
-          <ul id="mainnavlinks">
-            <li><a href="/" alt="Home">home</a></li>            
+        <div id="MainBannerRight">
+          <ul id="MainNavLinks">
             <li><a href="/#Projects" alt="Projects">projects</a></li>
             <li style="border-width:0;"><a href="/#About" alt="About Me">about</a></li>
 
@@ -31,7 +31,6 @@
         <section>
           <div id="ProjectsBanner">
             <div id="Projects">
-              <h2>Projects</h2>
             <div id="ProjectsCarousel" class="carousel slide" data-ride="carousel">
               <!-- Indicators -->
               <ol class="carousel-indicators">
@@ -45,14 +44,14 @@
                   <div class="projectitem item active" style="background: url( {% static 'images/polls.png' %} ) no-repeat center center;">
                     <a href="./polls/">
                       <div class="projects">
-                        <h3 style="font-size:300%;">Polls</h3>
+                        <h3>Polls</h3>
                       </div>
                     </a>
                   </div>
-                  <div class="projectitem item" style="background: url( {% static 'images/mapstbc.png' %} ) no-repeat center center;">
-                    <a name="maps"> 
+                  <div class="projectitem item" style="background: url( {% static 'images/noparking.png' %} ) no-repeat center center;">
+                    <a name="maps" href="./maps/"> 
                       <div class="projects">
-                        <h3 style="font-size:300%;">Maps</h3>
+                        <h3>Street Parking</h3>
                       </div>
                     </a>
                   </div>
@@ -86,7 +85,10 @@
               </div>
               <div id="AboutContent">
                 <p>
-                  My name is Alex, and for the last eight years I have been a part of the film industry creating amazing feature films and the contributing to the pipelines that makes them. What drives me most about developing and coding is the idea of making processes and workflows better. I'm someone who likes to emphasize the details of a project while in development to ensure that the end-result product that is delivered meets or exceeds the expectations of the end users. Please feel free to explore my hosted projects. Contact me using any of the connect links below. 
+                  My name is Alex, and for the last eight years I have been a part of the film industry creating amazing feature films and the contributing to the pipelines that makes them. What drives me most about developing and coding is the idea of making processes and workflows better. I'm someone who likes to emphasize the details of a project while in development to ensure that the end-result product that is delivered meets or exceeds the expectations of the end users.
+                </p>
+                <p> 
+                  Please feel free to explore my hosted projects, pull the source code from my Github, or contact me using any of the connect links below. 
                 </p>
               </div>
               <br>

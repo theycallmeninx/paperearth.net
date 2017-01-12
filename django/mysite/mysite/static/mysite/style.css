@@ -13,7 +13,7 @@ html, body {
   height: 100%;
   background: rgb(246, 250, 255);
   color: rgb(77,61,105);
-  /*background: rgb(60,153,78);*/
+  font-size: large;
 }
 
 div {
@@ -35,71 +35,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-/* MAIN PAGE DETAIL */
+/* MAIN */
 
-.Content {
-  display: block;
-  margin: 0 0;
-  width: 100%;
-}
-
-#MainBanner {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 50px;
-  width: 100%;
-  background: rgba(77,61,135, 0.7);
-  box-shadow: 0 0 25px;
-  z-index: 100;
-}
-
-#MainBanner a:link, #MainBanner a:visited  {
-  color: lightcyan;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-
-#mainbannerleft {
-  float: left;
-  width: 90%;
-  padding: 0.1em 0 0 0.3em;
-  margin: 0;
-}
-
-#mainbannerleft h1 {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 0 0 0 1em;
-  padding-top: 0.35em;
-  color: lightcyan;
-}
-
-#mainbannerright {
-  color: black;
-  float: right;
-  margin: 0 1em 0 -15em;
-  text-align: right;
-}
-
-#mainbannerright ul{
-  margin: 1em 0;
-}
-
-#mainnavlinks li{
-  list-style: none;
-  display: inline-block;
-  margin-left: 0;
-  border-right: 1px solid lightskyblue;
-  font-style: italic;
-  padding: 0em 0.7em;
-}
-
-
-
-/* PROJECTS DETAILS */
 
 
 #Projects {
@@ -111,11 +48,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #ProjectsCarousel {
-  height: 95%;
+  padding-top: 10vh;
 }
 
 #Projects p {
-  
   width: 100%;
 }
 
@@ -123,24 +59,25 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
   text-align: center;
   padding-top: 10px;
-  font-size: x-large;
+
 }
 
 .projects {
-  height: 80vh;
-  width: 100vw;
-  margin: 0 auto;
-  display: table-cell;
-  vertical-align: bottom;
-  padding-bottom: 3.5em;
+  height: 100%;
 }
 
 .projectitem {
   display: table;
+  height: 80vh;
 }
 
 .projectitem a:hover{
   text-decoration: none;
+}
+
+#ProjectsCarouselWrapper h3 {
+  font-size: 8vh;
+  padding: 0 1em;
 }
 
 /* ABOUT SECTION */
@@ -174,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #AboutHeader p {
-  font-size: 36px;
+  font-size: 46px;
   line-height: 50px;
   letter-spacing: -0.055em;
   font-weight: 500;
@@ -185,20 +122,17 @@ h1, h2, h3, h4, h5, h6 {
 #AboutQuote {
   margin: 0 auto;
   width: 70vw;
-  padding 1em 0;
-  height: 20em;
+  padding: 1em 0;
 }
 
 #AboutContent {
   margin: 1em auto;
-  width: 50vw;
   text-align: justify;
 }
 
 
 #AboutQuote p {
   text-align: center;
-  font-size: 20px;
   font-weight: 100;
   line-height: 50px;
   font-style: italic;
@@ -206,11 +140,9 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ABOUT EXPERIENCE*/
 #AboutSkills {
-  height: 21em;
   margin: 0 auto;
+  height: 21vh;
 }
-
-
 
 #AboutSkills ul {
   list-style: none;
@@ -219,12 +151,12 @@ h1, h2, h3, h4, h5, h6 {
 
 #SkillsLanguages {
   float: left;
-  margin-left: 32vw;
+  width: 50%;
 }
 
 #SkillsProducts {
-  margin-right: 32vw;
   float: right;
+  width: 50%;
 }
 
 .skills {
@@ -232,7 +164,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #Connect {
-  height: 20em;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
@@ -267,7 +198,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #ConnectSocialMedia ul {
   padding: 1em 0 0 0;
-  height: 100px;
+  margin: 0 auto;
 }
 
 #ConnectSocialMedia li {
@@ -358,147 +289,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-.BlockContent {
-  padding-top: 50px;
-  display: block;
-  text-align: center;
-}
 
-.BlockContent h2 {
-  color: white;
-}
-
-/* Polls Base Page Details*/
-
-#PollsBanner {
-  padding-top: 30px;
-}
-
-#PollsContent {
-  text-align: left;
-  width: 50%;
-  margin: 0 auto;
-  font-size: large;
-  color: rgb(77,61,105);
-}
-
-.PollsContent {
-  background: white;
-  box-shadow: 0px 3px 8px rgb(40, 40, 40);
-}
-
-#PollsContent h3 {
-  text-align: center;
-  font-size: x-large;
-  padding: 0.6em;
-  color: lightblue;
-  background: rgb(77,61,105);
-}
-
-#PollsContent ol {
-  list-style-position: inside;
-  text-align: left;
-  line-height: 2em;
-  padding-bottom: 1em;
-}
-
-#PollsContent a {
-  color: rgb(77,61,105);
-}
-
-#PollsContent label{
-  display: block;
-  margin: 0 0 1.5em 0;
-}
-
-#PollsDetails {
-  padding: 1em;
-  
-}
-
-#PollsDetails label{
-  margin: 0 0 1em 1em;
-  width: 50%;
-}
-
-#PollDetailsLinks {
-  border-top: 2px solid rgba(77,61,105, 0.5);
-  padding: 1em 1em 0 1em;
-  text-align: center;
-}
-
-#PollDetailsLinks input {
-  height: 2em;
-  background: rgb(246, 250, 255);
-  color: rgb(77,61,105);
-  font-weight: 700;
-  margin: 1em auto;
-  width: 80%;
-}
-
-#PollsResults {
-  text-align: center;
-  padding: 3em 0;
-}
-
-#PollsResults ul{
-  list-style: none;
-  padding: 0;
-}
-
-#PollsResultsLinks {
-  display: block;
-}
-
-#ErrorBox {
-  text-align: center;
-  color: red;
-}
-
-#NewPollsContent {
-  padding: 1em 2em 1em 2em;
-  margin: 0 auto;
-  color: rgb(77,61,105);
-  background: white;
-}
-
-#NewPollsContent label {
-  line-height: 2em;
-  font-weight: 700;
-  width: 50%;
-}
-
-#NewPoll {
-  width: 100%;
-  line-height: 2em;
-  margin: 0;
-}
-
-#NewChoices input {
-  display: block;
-  width: 70%;
-  line-height: 2em;
-}
-
-.PollFormRow {
-  width: 100%;
-}
-
-#AddNewChoice {
-  border-bottom: 1px solid rgb(77,61,105);
-}
-
-#AddNewChoice img {
-  margin: 0 1em 0 0;
-}
-
-#PollSubmit {
-  border: 2px solid rgb(77,61,105);
-  height: 3em;
-  background: rgb(246, 250, 255);
-  color: rgb(77,61,105);
-  font-weight: 700;
-  margin: 1em auto;
-  box-shadow: 0 2px 3px;
-  width: 100%;
+@media (max-device-width: 480px) {
+  #AboutHeader { font-size: 5.7vw; }
+  #AboutQuote { font-size: 2.7vw; width: 80%;}
+  #AboutContent { font-size: 2.5vw; width:70%; }
+  #AboutSkills { font-size: 2.4vw; height: 22vh; }
+  h3 { font-size: 3.2vw; }
+  h4 { font-size: 2.7vw; }
+  .BlockContent h2 { font-size: 5vw; }
+  .BlockContent h3 { font-size: 4vw; }
+  #ConnectSocialMedia ul { width:80%; }
+  #MainBanner a:link, 
+  #MainBanner a:visited  { font-size: 2.5vw; }
+  #ProjectsCarousel { padding-top: 15vh; }
 }
