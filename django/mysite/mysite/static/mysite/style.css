@@ -111,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #AboutHeader p {
-  font-size: 46px;
+  font-size: 4.7vw;
   line-height: 50px;
   letter-spacing: -0.055em;
   font-weight: 500;
@@ -128,6 +128,7 @@ h1, h2, h3, h4, h5, h6 {
 #AboutContent {
   margin: 1em auto;
   text-align: justify;
+  width: 70vw;
 }
 
 
@@ -141,7 +142,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ABOUT EXPERIENCE*/
 #AboutSkills {
   margin: 0 auto;
-  height: 21vh;
+  height: 30vh;
 }
 
 #AboutSkills ul {
@@ -291,7 +292,6 @@ h1, h2, h3, h4, h5, h6 {
 
 
 @media (max-device-width: 480px) {
-  #AboutHeader { font-size: 5.7vw; }
   #AboutQuote { font-size: 2.7vw; width: 80%;}
   #AboutContent { font-size: 2.5vw; width:70%; }
   #AboutSkills { font-size: 2.4vw; height: 22vh; }
@@ -304,3 +304,18 @@ h1, h2, h3, h4, h5, h6 {
   #MainBanner a:visited  { font-size: 2.5vw; }
   #ProjectsCarousel { padding-top: 15vh; }
 }
+
+/*@media (min-device-width: 481px) {
+  #AboutHeader { font-size: 5.7vw; }
+  #AboutQuote { font-size: 2.7vw; width: 80%;}
+  #AboutContent { font-size: 2.5vw; width:70%; }
+  #AboutSkills { font-size: 2.4vw; height: 22vh; }
+  h3 { font-size: 3.2vw; }
+  h4 { font-size: 2.7vw; }
+  .BlockContent h2 { font-size: 5vw; }
+  .BlockContent h3 { font-size: 4vw; }
+  #ConnectSocialMedia ul { width:80%; }
+  #MainBanner a:link, 
+  #MainBanner a:visited  { font-size: 2.5vw; }
+  #ProjectsCarousel { padding-top: 15vh; }
+}*/
