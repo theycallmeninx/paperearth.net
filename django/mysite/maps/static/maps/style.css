@@ -88,10 +88,9 @@
 }
 
 #AddNewSign {
-  max-width: 1090px;
   text-align: center;
-  margin: 0 auto;
-  padding: 0 2em;
+  margin: 0 0 10vh 0;
+  padding: 0;
 }
 
 
@@ -103,13 +102,13 @@
 #NewSignMapBanner {
   width: 100%;
   height: 90vh;
-  padding-top: 10vh;
 }
 
 #NewSignDetailsBanner {
-  padding-top: 5vh;
+  padding-top: 13vh;
   display: block;
-  width: 100%;
+  width: 80%;
+  height: 85vh;
   text-align: center;
   margin: 0 auto;
 }
@@ -125,28 +124,19 @@
 #TimeSlots {
   margin: 0 auto;
   overflow: auto;
-}
-
-
-.timeslot h4 {
-  margin-top: 0;
-  font-size: 16px;
-  font-weight: 700;
+  width: 70vw;
   text-align: center;
 }
+
+
 
 #TimeSlot input{
   width: 6em;
 }
 
-#TimesStartEnd {
-  float: left;
-}
-
 #WeekDays {
-  float: right;
-  width: 175px;
-  text-align: right;
+  width: 100%;
+  height: 7vh;
 }
 
 #WeekDays input{
@@ -158,12 +148,17 @@
   text-align: left;
 }
 
+
 .timeslot {
-  overflow: auto;
+  text-align: center;
   width: 100%;
-  height: auto;
-  margin: 0 auto;
-  text-align: left;
+  border: 2px solid grey;
+  padding: 1em;
+}
+
+.timestartendslot {
+  padding: 1em 5em;
+  height: 10vh;
 }
 
 .ts_hidden {
@@ -174,6 +169,7 @@
 
 #AdditionalsBanner {
   margin: 0 auto;
+  padding-top: 5vh;
 }
 
 #AdditionalsBanner label{
@@ -187,8 +183,9 @@
 }
 
 #SignOptions {
-  text-align: right;
+  padding: 1em;
   margin: 0 auto;
+  border-top: 1px solid black;
 }
 
 #SignOptions select{
@@ -218,8 +215,8 @@
 }
 
 #NewSignMapBox {
-max-width: 80vw;
-height: 60vh;
+
+height: 90vh;
 margin: 0 auto;
 }
 

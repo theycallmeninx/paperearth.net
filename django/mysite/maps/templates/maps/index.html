@@ -49,7 +49,6 @@
         </div>
         <div id="AddSignContainer">
           <div id="AddNewSign">
-            <h3>New Sign</h3>
             <div id="NewSignBanner">
               <form action="" id="NewSignForm" method="post">
               <div id="NewSignMapBanner">
@@ -67,32 +66,40 @@
               <div id="NewSignPhotoBanner"></div>
               <div id="NewSignDetailsBanner">
                 <div id="TimeSlots">
-                  <div id="TimeSlot" class="timeslot">
-                  <h4>Sign Time Details</h4>
-                    <div id="TimeSlotDetails" >
-                      <div id="TimesStartEnd">
+                  <div id="TimeSlot1" class="timeslot">
+                    <div id="WeekDays">
+                      <label>Sunday<input name="week" id="su_b" type="checkbox"></label>
+                      <label>Monday<input name="week" id="mo_b" type="checkbox"></label>
+                      <label>Tuesday<input name="week" id="tu_b" type="checkbox"></label>
+                      <label>Wednesday<input name="week" id="we_b" type="checkbox"></label>
+                      <br><label>Thursday<input name="week" id="th_b" type="checkbox"></label>
+                      <label>Friday<input name="week" id="fr_b" type="checkbox"></label>
+                      <label>Saturday<input name="week" id="sa_b" type="checkbox"></label>
+                      <br>
+                    </div>
+                    <div id="TimesStartEnd" class="timestartendslot">
+                      <div class="input-group clockpicker" data-autoclose="true" style="float:left;">
                         <label>Start</label>
-                        <div class="input-group clockpicker" data-autoclose="true" >
-                          <input name="timestart" type="text" class="form-control" placeholder="09:00">
-                        </div>
-                        <br><br>
-                        <label>End</label>
-                        <div class="input-group clockpicker" data-autoclose="true">
-                          <input name="timeend" type="text" class="form-control" placeholder="17:00">
-                        </div>
+                        <input name="timestart" type="text" class="form-control" placeholder="09:00">
                       </div>
-                      <div id="WeekDays">
-                        <label>Sunday<input name="week" id="su_b" type="checkbox"></label>
-                        <br><label>Saturday<input name="week" id="sa_b" type="checkbox"></label>
-                        <br><label>Monday<input name="week" id="mo_b" type="checkbox"></label>
-                        <br><label>Tuesday<input name="week" id="tu_b" type="checkbox"></label>
-                        <br><label>Wednesday<input name="week" id="we_b" type="checkbox"></label>
-                        <br><label>Thursday<input name="week" id="th_b" type="checkbox"></label>
-                        <br><label>Friday<input name="week" id="fr_b" type="checkbox"></label>
-                        <br>
+                      <div class="input-group clockpicker" data-autoclose="true" style="float:right;">
+                        <label>End</label>
+                        <input name="timeend" type="text" class="form-control" placeholder="17:00">
+                      </div>
+                    </div>
+                    <a onclick="">Add Second Time Slot</a>
+                    <div id="SecondTimesStartEnd" class="timestartendslot ts_hidden">
+                      <div class="input-group clockpicker" data-autoclose="true" style="float:left;">
+                        <label>Start</label>
+                        <input name="timestart" type="text" class="form-control" placeholder="09:00">
+                      </div>
+                      <div class="input-group clockpicker" data-autoclose="true" style="float:right;">
+                        <label>End</label>
+                        <input name="timeend" type="text" class="form-control" placeholder="17:00">
                       </div>
                     </div>
                   </div>
+                  <a onclick="">Add Additional Date Slot</a>
                 </div>
                 <div id="AdditionalsBanner">
                   <div id="SignOptions">
@@ -111,9 +118,10 @@
                         <option value="360">6 Hours</option>
                       </select>
                     <input name="permitname" type="text" id="permitname" placeholder="Permit Name/ID (optional)">
-                    <br><label>Metered<input name="metered" id="metered_b" type="checkbox"></label>
-                    <br><label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>             
-                    <br><label>Commercial Only<input name="commericial" id="commercial_b" type="checkbox"></label>
+                    <br>
+                    <label>Metered<input name="metered" id="metered_b" type="checkbox"></label>
+                    <label>Holiday Exclude<input id="holiday_b" type="checkbox"></label>             
+                    <label>Commercial Only<input name="commericial" id="commercial_b" type="checkbox"></label>
                     <br>
                   </div>
                 </div>
@@ -130,10 +138,10 @@
       <footer role="contentinfo">
       </footer>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.js"></script> 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPEppO0U-4BDO3BBXlXtA9h8Uk0kJL6_s&libraries=places&callback=initMap" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'maps/clockpicker/dist/bootstrap-clockpicker.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.js"></script>
     <script src="{% static 'maps/script.js' %}" ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPEppO0U-4BDO3BBXlXtA9h8Uk0kJL6_s&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>

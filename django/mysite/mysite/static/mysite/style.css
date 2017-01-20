@@ -134,7 +134,6 @@ h1, h2, h3, h4, h5, h6 {
 
 #AboutQuote p {
   text-align: center;
-  font-weight: 100;
   line-height: 50px;
   font-style: italic;
 }
@@ -223,13 +222,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #MailTextBox {
-  padding-top: 1em;
+  padding-top: 0.5em;
 }
 
 #MailBox {
   text-align: left;
   padding: 1em;
-  width: 45vw;
+  width: 65vw;
   margin-top: 30vh;
   margin-left: auto;
   margin-right: auto;
@@ -243,7 +242,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #MailClose p {
-  font-weight: 700;
   margin: 0;
   text-align: right;
 }
@@ -253,15 +251,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #Email {
-  width: 30vw;
-  font-weight: 100;
+  width: 100%;
   line-height: 30px;
-  font-size: 12px;
 }
 
 #MailForm label {
-  font-weight: 700;
-  font-size: 16px;
   color: rgb(77,61,105);
   width: 100%;
 }
@@ -272,21 +266,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #MailForm textarea {
-  font-weight: 100;
   resize: none;
-  width: 43vw;
-  height: 11em;
-  font-size: 12aaaaaaapx;
+  width: 100%;
+  height: 10vh;
 }
 
 
 #MailSubmit {
-  height: 3em;
-  background: rgb(250, 250, 255);
+  height: 2em;
+  width: 100%;
   color: rgb(77,61,105);
-  margin: 1em auto;
-  box-shadow: 0 2px 3px;
-  width: 43vw;
+  margin: 0 auto;
+  margin-left: fill;
 }
 
 
@@ -303,19 +294,5 @@ h1, h2, h3, h4, h5, h6 {
   #MainBanner a:link, 
   #MainBanner a:visited  { font-size: 2.5vw; }
   #ProjectsCarousel { padding-top: 15vh; }
+  #MailBox {  }
 }
-
-/*@media (min-device-width: 481px) {
-  #AboutHeader { font-size: 5.7vw; }
-  #AboutQuote { font-size: 2.7vw; width: 80%;}
-  #AboutContent { font-size: 2.5vw; width:70%; }
-  #AboutSkills { font-size: 2.4vw; height: 22vh; }
-  h3 { font-size: 3.2vw; }
-  h4 { font-size: 2.7vw; }
-  .BlockContent h2 { font-size: 5vw; }
-  .BlockContent h3 { font-size: 4vw; }
-  #ConnectSocialMedia ul { width:80%; }
-  #MainBanner a:link, 
-  #MainBanner a:visited  { font-size: 2.5vw; }
-  #ProjectsCarousel { padding-top: 15vh; }
-}*/
