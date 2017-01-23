@@ -12,8 +12,10 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-sys.path.insert(0, os.path.realpath(__file__))
-sys.path.insert(0, "/opt/python/current/app/django/mysite")
+# sys.path.insert(0, os.path.realpath(__file__))
+# sys.path.insert(0, "/opt/python/current/app/django/mysite")
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")

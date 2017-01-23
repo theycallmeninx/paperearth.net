@@ -23,11 +23,35 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-secretkey = os.path.expanduser("~/gitrepos/webdocs/paperearth/secretkey.txt")
-dbconn = os.path.expanduser("~/gitrepos/webdocs/paperearth/dbconn.txt")
 
-with open(secretkey) as f:
-    SECRET_KEY = f.read().strip()
+if 'RDS_HOSTNAME' in os.environ:
+    DATABASES = {
+        'default': {
+            "ENGINE": "django.db.backends.postgresql",
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+    # Database
+    # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+    # not the most ideal, should move this to local machine environment settings for virtual env
+    dbconn = os.path.expanduser("~/gitrepos/webdocs/paperearth/dbconn.txt")
+    dbsettings=""
+    with open(dbconn) as f:
+        dbsettings += f.read().strip()
+
+    DATABASES = json.loads(dbsettings)
+
+if 'SECRETKEY' in os.environ:
+    SECRETKEY = os.environ['SECRETKEY']
+else:
+    secretkey = os.path.expanduser("~/gitrepos/webdocs/paperearth/secretkey.txt")
+    with open(secretkey) as f:
+       SECRET_KEY = f.read().strip()
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
@@ -85,14 +109,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-dbsettings=""
-with open(dbconn) as f:
-    dbsettings += f.read().strip()
-
-DATABASES = json.loads(dbsettings)
 
 
 # Password validation
