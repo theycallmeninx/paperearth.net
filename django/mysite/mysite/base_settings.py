@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 if 'SECRETKEY' in os.environ:
-    SECRETKEY = os.environ['SECRETKEY']
+    SECRET_KEY = os.environ['SECRETKEY']
 else:
     secretkey = os.path.expanduser("~/gitrepos/webdocs/paperearth/secretkey.txt")
     with open(secretkey) as f:
