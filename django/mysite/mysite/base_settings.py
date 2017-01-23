@@ -21,6 +21,14 @@ SERVER_EMAIL = 'alex@paperearth.net'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+if 'SECRETKEY' in os.environ:
+    SECRETKEY = os.environ['SECRETKEY']
+else:
+    secretkey = os.path.expanduser("~/gitrepos/webdocs/paperearth/secretkey.txt")
+    with open(secretkey) as f:
+       SECRET_KEY = f.read().strip()
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -45,13 +53,6 @@ else:
         dbsettings += f.read().strip()
 
     DATABASES = json.loads(dbsettings)
-
-if 'SECRETKEY' in os.environ:
-    SECRETKEY = os.environ['SECRETKEY']
-else:
-    secretkey = os.path.expanduser("~/gitrepos/webdocs/paperearth/secretkey.txt")
-    with open(secretkey) as f:
-       SECRET_KEY = f.read().strip()
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
