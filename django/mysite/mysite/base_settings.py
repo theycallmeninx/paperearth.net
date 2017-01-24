@@ -56,7 +56,8 @@ else:
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
-                 'paperearth.net' 
+                 'paperearth.net',
+                 'django-env.sikwnpymxg.us-west-2.elasticbeanstalk.com'
                 ]
 
 
