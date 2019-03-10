@@ -1,7 +1,7 @@
-Django==1.10
+Django>=1.11.19
 Pillow==4.0.0
 argparse==1.2.1
 olefile==0.44
 psycopg2==2.6.2
-requests==2.12.5
+requests<=2.20.0
 wsgiref==0.1.2
